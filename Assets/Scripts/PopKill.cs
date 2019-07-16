@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class PopKill : MonoBehaviour {
 
-    public HopperControls Player;
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player")
         {
             gameObject.GetComponent<SpriteRenderer>().enabled = true;
         }

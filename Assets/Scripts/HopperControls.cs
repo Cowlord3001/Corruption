@@ -19,11 +19,11 @@ public class HopperControls : MonoBehaviour {
         Mybody = gameObject.GetComponent<Rigidbody2D>();
 
         //New Stuff: Sets JumpCool depending on stage
-        if (SceneManager.GetActiveScene().buildIndex != 3)
+        if (SceneManager.GetActiveScene().buildIndex != 3 && SceneManager.GetActiveScene().buildIndex != 4)
         {
             JumpCool = true;
         }
-        else if (SceneManager.GetActiveScene().buildIndex == 3)
+        else if (SceneManager.GetActiveScene().buildIndex == 3 || SceneManager.GetActiveScene().buildIndex == 4)
         {
             JumpCool = false;
         }
