@@ -28454,7 +28454,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1830434626988896, guid: 8801b13ca0b18524a9c1dc192d3266f4, type: 2}
       propertyPath: m_Name
-      value: Goal
+      value: Checkpoint
       objectReference: {fileID: 0}
     - target: {fileID: 212266352662933706, guid: 8801b13ca0b18524a9c1dc192d3266f4,
         type: 2}

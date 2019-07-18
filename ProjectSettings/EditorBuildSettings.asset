@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Infinity Hopper Stage 3.5.unity
     guid: dbe7b855c39cb2349958b4594650f360
+  - enabled: 1
+    path: Assets/Scenes/Infinity Hopper Boss.unity
+    guid: c0012ac12c820e74b97ee7bd3cba42aa
   m_configObjects: {}

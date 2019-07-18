@@ -9,7 +9,7 @@ public class HopperControls : MonoBehaviour {
     public float speed;
     public static bool CanJump;
     //New Bool
-    bool JumpCool;
+    public static bool JumpCool;
     Rigidbody2D Mybody;
 
 	// Use this for initialization
@@ -19,11 +19,11 @@ public class HopperControls : MonoBehaviour {
         Mybody = gameObject.GetComponent<Rigidbody2D>();
 
         //New Stuff: Sets JumpCool depending on stage
-        if (SceneManager.GetActiveScene().buildIndex != 3 && SceneManager.GetActiveScene().buildIndex != 4)
+        if (SceneManager.GetActiveScene().buildIndex != 3 && SceneManager.GetActiveScene().buildIndex != 4 && SceneManager.GetActiveScene().buildIndex != 5)
         {
             JumpCool = true;
         }
-        else if (SceneManager.GetActiveScene().buildIndex == 3 || SceneManager.GetActiveScene().buildIndex == 4)
+        else
         {
             JumpCool = false;
         }
@@ -64,6 +64,7 @@ public class HopperControls : MonoBehaviour {
         {
             speed = 0;
             CanJump = false;
+            JumpCool = true;
             Invoke("reload", 1);
         }
 
@@ -71,6 +72,7 @@ public class HopperControls : MonoBehaviour {
         {
             speed = 0;
             CanJump = false;
+            JumpCool = true;
             Invoke("NextStage", 1);
         }
 

@@ -13,6 +13,7 @@ public class BlockKill : MonoBehaviour {
         {
                 Player.speed = 0;
                 HopperControls.CanJump = false;
+                HopperControls.JumpCool = true;
                 Invoke("reload", 1);
             
         }
