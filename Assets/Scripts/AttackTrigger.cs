@@ -4,10 +4,53 @@ using UnityEngine;
 
 public class AttackTrigger : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+    public GameObject[] Attacks;
+    GameObject GreenAttackNode;
+    
+    
+    void Attack()
+    {
+        int x = Random.Range(0, 3);
+        int y = Random.Range(0, 3);
+        while (y == x)
+        {
+            y = Random.Range(0, 3);
+        }
+
+        for (int i = 0; i < 4; i++)
+        {
+            Attacks[i].SetActive(false);
+        }
+
+        Attacks[x].SetActive(true);
+        Attacks[y].SetActive(true);
+    }
+
+    void GreenAttack()
+    {
+        GreenAttackNode.SetActive(true);
+    }
+
+    private void OnDestroy()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            Attacks[i].SetActive(false);
+        }
+        GreenAttackNode.SetActive(false);
+    }
+
+    // Use this for initialization
+    void Start ()
+    {
+        Attacks = GameObject.FindGameObjectsWithTag("AttackNode");
+        GreenAttackNode = GameObject.Find("GreenAttackNode");
+        for (int i = 0; i < 4; i++)
+        {
+            Attacks[i].SetActive(false);
+        }
+        GreenAttackNode.SetActive(false);
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -18,7 +61,8 @@ public class AttackTrigger : MonoBehaviour {
     {
         if(collision.tag == "Player")
         {
-
+            InvokeRepeating("Attack", 0, 5);
+            Invoke("GreenAttack", 20);
         }
     }
 }

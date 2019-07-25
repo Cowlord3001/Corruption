@@ -76,6 +76,13 @@ public class HopperControls : MonoBehaviour {
             Invoke("NextStage", 1);
         }
 
+        else if (collision.gameObject.tag == "Reflected")
+        {
+            Boss1Attack.GreenHit = true;
+            collision.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(-23, 0);
+            collision.gameObject.GetComponent<PolygonCollider2D>().isTrigger = true;
+        }
+
     }
 
     void reload()

@@ -15,6 +15,11 @@ public class Boss1Attack : MonoBehaviour {
     public float TargetSpeed;
     public float TRoF;
 
+    public bool GreenAttack;
+    public GameObject GreenProjectile;
+    public float GreenSpeed;
+    public static bool GreenHit;
+
     Vector2 Dir;
     public GameObject Player;
 
@@ -29,20 +34,42 @@ public class Boss1Attack : MonoBehaviour {
         {
             InvokeRepeating("Target", 0, TRoF);
         }
+
+        else if (GreenAttack == true)
+        {
+            InvokeRepeating("Green", 0, 12);
+        }
     }
 
-    private void Start()
+    private void OnDisable()
     {
-        if (SpreadAttack == true)
-        {
-            InvokeRepeating("Spread", 0, SRoF);
-        }
+        CancelInvoke();
+    }
 
-        else if (TargetAttack == true)
+    void Green()
+    {
+        if (GreenHit != true)
         {
-            InvokeRepeating("Target", 0, TRoF);
+
+            GameObject GO = Instantiate(GreenProjectile, transform.position, Quaternion.identity);
+            GO.GetComponent<Rigidbody2D>().gravityScale = 0;
+            GO.GetComponent<Rigidbody2D>().velocity = Vector3.right * GreenSpeed;
+            Destroy(GO, 12);
         }
     }
+
+    //private void Start()
+    //{
+    //    if (SpreadAttack == true)
+    //    {
+    //        InvokeRepeating("Spread", 0, SRoF);
+    //    }
+
+    //    else if (TargetAttack == true)
+    //    {
+    //        InvokeRepeating("Target", 0, TRoF);
+    //    }
+    //}
 
 
     // Update is called once per frame
@@ -61,6 +88,7 @@ public class Boss1Attack : MonoBehaviour {
             GO.transform.position += GO.transform.up.normalized * 2.5f;
             GO.GetComponent<Rigidbody2D>().gravityScale = 0;
             GO.GetComponent<Rigidbody2D>().velocity = GO.transform.up.normalized * SpreadSpeed;
+            Destroy(GO, 12);
 
             if (i != 0)
             {
@@ -68,6 +96,7 @@ public class Boss1Attack : MonoBehaviour {
                 GO.transform.position += GO.transform.up.normalized * 2.5f;
                 GO.GetComponent<Rigidbody2D>().gravityScale = 0;
                 GO.GetComponent<Rigidbody2D>().velocity = GO.transform.up.normalized * SpreadSpeed;
+                Destroy(GO, 12);
             }
         }
         
@@ -91,6 +120,6 @@ public class Boss1Attack : MonoBehaviour {
         GameObject GO = Instantiate(TargetProjectile, transform.position, Quaternion.identity*Quaternion.FromToRotation(Vector3.up, Dir));
         GO.GetComponent<Rigidbody2D>().gravityScale = 0;
         GO.GetComponent<Rigidbody2D>().velocity = Dir.normalized * TargetSpeed;
-
+        Destroy(GO, 12);
     }
 }
