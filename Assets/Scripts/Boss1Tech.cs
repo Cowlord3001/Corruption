@@ -8,6 +8,7 @@ public class Boss1Tech : MonoBehaviour {
     public float TileLength;
     int BossHealth = 3;
     GameObject ATile;
+    public GameObject EndPortal;
 
 	// Use this for initialization
 	void Start ()
@@ -20,25 +21,55 @@ public class Boss1Tech : MonoBehaviour {
 		
 	}
 
+    void die()
+    {
+        Instantiate(EndPortal, new Vector3(transform.position.x, 0, 0), Quaternion.identity);
+        Destroy(gameObject.transform.parent.gameObject);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Reflected")
         {
-            BossHealth -= 1;
-            SpawnTiles();
-            Destroy(ATile);
+            if (BossHealth == 1)
+            {
+                Destroy(collision.gameObject);
+                ATile.SetActive(false);
+                Rigidbody2D Mybody = gameObject.transform.parent.gameObject.AddComponent<Rigidbody2D>();
+                Mybody.angularVelocity = 720;
+                Invoke("die", 5);
+            }
+
+            else
+            {
+                BossHealth -= 1;
+                Destroy(collision.gameObject);
+                ATile.SetActive(false);
+                SpawnTiles();
+                Boss1Attack.GreenHit = false;
+            }
         }
     }
 
     //Script that delets tiles
     void SpawnTiles()
     {
-            int numtiles = Random.Range(3, 5);
+        int numtiles = Random.Range(3, 5);
             for (int i = 1; i <= numtiles; i++)
             {
                 int tiletypes = Random.Range(1, BossTiles.Length);
                 Instantiate(BossTiles[tiletypes], transform.position - (TileLength + 5) * i * Vector3.right + Vector3.forward * 3, Quaternion.identity);
             }
-        ATile = Instantiate(BossTiles[0], transform.position - (TileLength + 5) * (numtiles + 1) * Vector3.right + Vector3.forward * 3, Quaternion.identity);
+        if (ATile == null)
+        {
+            ATile = Instantiate(BossTiles[0], transform.position - (TileLength + 5) * (numtiles + 1) * Vector3.right + Vector3.forward * 3, Quaternion.identity);
+        }
+
+        else
+        {
+            ATile.transform.position = transform.position - (TileLength + 5) * (numtiles + 1) * Vector3.right + Vector3.forward * 3;
+            ATile.SetActive(true);
+        }
+
     }
 }

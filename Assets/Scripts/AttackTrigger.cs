@@ -31,7 +31,17 @@ public class AttackTrigger : MonoBehaviour {
         GreenAttackNode.SetActive(true);
     }
 
-    private void OnDestroy()
+    private void OnDisable()
+    {
+        CancelInvoke();
+        for (int i = 0; i < 4; i++)
+        {
+            Attacks[i].SetActive(false);
+        }
+        GreenAttackNode.SetActive(false);
+    }
+
+    private void OnEnable()
     {
         for (int i = 0; i < 4; i++)
         {

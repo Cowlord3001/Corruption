@@ -17,6 +17,6 @@ public class StartButtons : MonoBehaviour {
 
     public void InfinityStart()
     {
-        SceneManager.LoadScene("Infinity Hopper Stage 1");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
