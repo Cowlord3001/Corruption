@@ -8,6 +8,13 @@ TagManager:
   - Spike
   - Reflected
   - AttackNode
+  - Red
+  - Orange
+  - Yellow
+  - Green
+  - Blue
+  - Purple
+  - Pink
   layers:
   - Default
   - TransparentFX

@@ -616,11 +616,11 @@ MonoBehaviour:
   SRoF: 3
   TargetAttack: 0
   TargetProjectile: {fileID: 1018423463}
-  TargetSpeed: 20
-  TRoF: 1.5
+  TargetSpeed: 15
+  TRoF: 2
   GreenAttack: 0
   GreenProjectile: {fileID: 522368331}
-  GreenSpeed: 3
+  GreenSpeed: 2
   Player: {fileID: 1729324513}
 --- !u!1 &126933402
 GameObject:
@@ -1104,6 +1104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcbc1d040edb07e41bebb20c16a79821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GravUp: 0
 --- !u!1001 &208163912
 Prefab:
   m_ObjectHideFlags: 0
@@ -1846,11 +1847,11 @@ MonoBehaviour:
   SRoF: 3
   TargetAttack: 1
   TargetProjectile: {fileID: 1018423463}
-  TargetSpeed: 20
-  TRoF: 1.5
+  TargetSpeed: 15
+  TRoF: 2
   GreenAttack: 0
   GreenProjectile: {fileID: 522368331}
-  GreenSpeed: 3
+  GreenSpeed: 2
   Player: {fileID: 1729324513}
 --- !u!114 &417437191
 MonoBehaviour:
@@ -2565,11 +2566,11 @@ MonoBehaviour:
   SRoF: 3
   TargetAttack: 0
   TargetProjectile: {fileID: 1018423463}
-  TargetSpeed: 20
-  TRoF: 1.5
+  TargetSpeed: 15
+  TRoF: 2
   GreenAttack: 1
   GreenProjectile: {fileID: 522368331}
-  GreenSpeed: 3
+  GreenSpeed: 2
   Player: {fileID: 1729324513}
 --- !u!1 &649929532
 GameObject:
@@ -3050,48 +3051,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
---- !u!1001 &741904456
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4093666806700252, guid: 36e13e6bd2ccf9c409f7805ffb2a130d, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 54.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4093666806700252, guid: 36e13e6bd2ccf9c409f7805ffb2a130d, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4093666806700252, guid: 36e13e6bd2ccf9c409f7805ffb2a130d, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4093666806700252, guid: 36e13e6bd2ccf9c409f7805ffb2a130d, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4093666806700252, guid: 36e13e6bd2ccf9c409f7805ffb2a130d, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4093666806700252, guid: 36e13e6bd2ccf9c409f7805ffb2a130d, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4093666806700252, guid: 36e13e6bd2ccf9c409f7805ffb2a130d, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4093666806700252, guid: 36e13e6bd2ccf9c409f7805ffb2a130d, type: 2}
-      propertyPath: m_RootOrder
-      value: 7
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 36e13e6bd2ccf9c409f7805ffb2a130d, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &743668859
 GameObject:
   m_ObjectHideFlags: 0
@@ -4818,11 +4777,11 @@ MonoBehaviour:
   SRoF: 3
   TargetAttack: 1
   TargetProjectile: {fileID: 1018423463}
-  TargetSpeed: 20
-  TRoF: 1.5
+  TargetSpeed: 15
+  TRoF: 2
   GreenAttack: 0
   GreenProjectile: {fileID: 522368331}
-  GreenSpeed: 3
+  GreenSpeed: 2
   Player: {fileID: 1729324513}
 --- !u!1 &1124220947
 GameObject:
@@ -8911,11 +8870,11 @@ MonoBehaviour:
   SRoF: 3
   TargetAttack: 0
   TargetProjectile: {fileID: 1018423463}
-  TargetSpeed: 20
-  TRoF: 1.5
+  TargetSpeed: 15
+  TRoF: 2
   GreenAttack: 0
   GreenProjectile: {fileID: 522368331}
-  GreenSpeed: 3
+  GreenSpeed: 2
   Player: {fileID: 1729324513}
 --- !u!4 &2057567464 stripped
 Transform:

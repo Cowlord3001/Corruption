@@ -34,20 +34,26 @@ public class AttackTrigger : MonoBehaviour {
     private void OnDisable()
     {
         CancelInvoke();
-        for (int i = 0; i < 4; i++)
+        if (Attacks.Length == 4)
         {
-            Attacks[i].SetActive(false);
+            for (int i = 0; i < 4; i++)
+            {
+                Attacks[i].SetActive(false);
+            }
+            GreenAttackNode.SetActive(false);
         }
-        GreenAttackNode.SetActive(false);
     }
 
     private void OnEnable()
     {
-        for (int i = 0; i < 4; i++)
+        if(Attacks.Length == 4)
         {
-            Attacks[i].SetActive(false);
+            for (int i = 0; i < 4; i++)
+            {
+                Attacks[i].SetActive(false);
+            }
+            GreenAttackNode.SetActive(false);
         }
-        GreenAttackNode.SetActive(false);
     }
 
     // Use this for initialization
