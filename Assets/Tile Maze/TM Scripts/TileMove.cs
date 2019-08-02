@@ -82,6 +82,21 @@ public class TileMove : MonoBehaviour {
         {
             StopMovement();
         }
+        
+        //Pink (and Start) = Floor: No special function - DONE
+        //Red (and Border) = Wall: Cannot move through it - DONE
+        //Yellow (and Static) = Electric: Destroys the Player & restarts the puzzle - 
+        //Orange = Helium: Makes the Player "Light;" Light can not pass over Fan (Blue) tiles,
+        //but can pass over Trapdoor (Green) tiles - 
+        //Purple = Factory: Makes the Player "Heavy" and pushes them to the next tile;
+        //Heavy can pass over Fan (Blue) tiles, but can not pass over Trapdoor (Green) tiles - 
+        //Blue = Fan: Light can not pass over it; Overdrives when next to an Electric (Yellow) tile
+        //(Nothing can pass over it when Overdriven) - 
+        //Green = Trapdoor: Heavy can not pass over it - 
+        //Border: Walls off the puzzle; same function as Wall (Red) - DONE
+        //Static: Appears as game becomes corrupted; same function as Electric (Yellow) - 
+        //Start: Player starts here; same function as Floor (Pink) - 
+        //End: Touch to end puzzle - 
     }
 
     void StopMovement()

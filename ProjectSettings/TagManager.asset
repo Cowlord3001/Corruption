@@ -15,6 +15,7 @@ TagManager:
   - Blue
   - Purple
   - Pink
+  - End
   layers:
   - Default
   - TransparentFX
