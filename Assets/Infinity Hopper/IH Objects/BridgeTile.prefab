@@ -1717,7 +1717,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1294535883979360}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 52.4, y: 0, z: 3}
+  m_LocalPosition: {x: -39.72369, y: -1.349472, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4745701790247262}
@@ -3589,7 +3589,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -5, y: 7}
+  m_Offset: {x: -4.5, y: 7}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -3664,7 +3664,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -6.5, y: 5}
+  m_Offset: {x: -6, y: 5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -3714,7 +3714,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -10, y: 9}
+  m_Offset: {x: -9.5, y: 9}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -3789,7 +3789,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -9, y: 7}
+  m_Offset: {x: -8, y: 7}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -3939,7 +3939,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -11, y: 9}
+  m_Offset: {x: -10, y: 9}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -4014,7 +4014,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -5, y: 7}
+  m_Offset: {x: -4.5, y: 7}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -4064,7 +4064,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -3.5, y: 7}
+  m_Offset: {x: -3, y: 7}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -4139,7 +4139,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -9, y: 9}
+  m_Offset: {x: -8.5, y: 9}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -4164,7 +4164,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -5, y: 7}
+  m_Offset: {x: -4.5, y: 7}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -4188,6 +4188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcbc1d040edb07e41bebb20c16a79821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GravUp: 0
 --- !u!114 &114276562368534296
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4199,6 +4200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcbc1d040edb07e41bebb20c16a79821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GravUp: 0
 --- !u!114 &114277915768585614
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4210,6 +4212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcbc1d040edb07e41bebb20c16a79821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GravUp: 0
 --- !u!114 &114318253193668902
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4221,6 +4224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcbc1d040edb07e41bebb20c16a79821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GravUp: 0
 --- !u!114 &114541855842923706
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4232,6 +4236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcbc1d040edb07e41bebb20c16a79821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GravUp: 0
 --- !u!114 &114643066283362110
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4243,6 +4248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcbc1d040edb07e41bebb20c16a79821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GravUp: 0
 --- !u!114 &114678182415262128
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4254,6 +4260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcbc1d040edb07e41bebb20c16a79821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GravUp: 0
 --- !u!114 &114762983510412672
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4265,6 +4272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcbc1d040edb07e41bebb20c16a79821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GravUp: 0
 --- !u!114 &114889173916179320
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4276,6 +4284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcbc1d040edb07e41bebb20c16a79821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GravUp: 0
 --- !u!212 &212056509313124448
 SpriteRenderer:
   m_ObjectHideFlags: 1

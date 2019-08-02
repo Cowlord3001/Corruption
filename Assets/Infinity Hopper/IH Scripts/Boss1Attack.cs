@@ -37,7 +37,7 @@ public class Boss1Attack : MonoBehaviour {
 
         else if (GreenAttack == true)
         {
-            InvokeRepeating("Green", 0, 12);
+            InvokeRepeating("Green", 0, 8);
         }
     }
 
@@ -54,7 +54,7 @@ public class Boss1Attack : MonoBehaviour {
             GameObject GO = Instantiate(GreenProjectile, transform.position, Quaternion.identity);
             GO.GetComponent<Rigidbody2D>().gravityScale = 0;
             GO.GetComponent<Rigidbody2D>().velocity = Vector3.right * GreenSpeed;
-            Destroy(GO, 12);
+            Destroy(GO, 8);
         }
     }
 

@@ -12,6 +12,8 @@ public class HopperControls : MonoBehaviour {
     public static bool JumpCool;
     Rigidbody2D Mybody;
 
+    public bool Playtesting_Mode;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -60,12 +62,17 @@ public class HopperControls : MonoBehaviour {
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
-        if (collision.gameObject.tag == "Spike")
+        if (collision.gameObject.tag == "Spike" && Playtesting_Mode == false)
         {
             speed = 0;
             CanJump = false;
             JumpCool = true;
             Invoke("reload", 1);
+        }
+
+        else if (collision.gameObject.tag == "Spike" && Playtesting_Mode == true)
+        {
+
         }
 
         else if(collision.gameObject.tag == "Finish")
