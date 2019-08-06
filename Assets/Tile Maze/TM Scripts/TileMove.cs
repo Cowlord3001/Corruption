@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TileMove : MonoBehaviour {
 
-    public float MinX, MinY, MaxX, MaxY;
+    //public float MinX, MinY, MaxX, MaxY;
     public float Speed;
     bool Moving;
     bool CanMove;
@@ -12,6 +13,15 @@ public class TileMove : MonoBehaviour {
     Vector2 TargetPos;
     float T;
     GameObject CurrentTile;
+
+    EndTile End;
+    public GameObject OldStart;
+    public float CamSpeed;
+
+    Vector2 LastMove;
+    GameObject PrevTile;
+
+    public int Weight;
 
 	// Use this for initialization
 	void Start ()
@@ -32,6 +42,7 @@ public class TileMove : MonoBehaviour {
                 Moving = true;
                 TargetPos = (Vector2) transform.position + Vector2.up;
                 StartPos = transform.position;
+                LastMove = Vector2.up;
                 StartMove();
             }
             else if (Input.GetKeyDown(KeyCode.DownArrow) == true || Input.GetKeyDown(KeyCode.S) == true)
@@ -40,6 +51,7 @@ public class TileMove : MonoBehaviour {
                 Moving = true;
                 TargetPos = (Vector2)transform.position + Vector2.down;
                 StartPos = transform.position;
+                LastMove = Vector2.down;
                 StartMove();
             }
             else if (Input.GetKeyDown(KeyCode.LeftArrow) == true || Input.GetKeyDown(KeyCode.A) == true)
@@ -48,6 +60,7 @@ public class TileMove : MonoBehaviour {
                 Moving = true;
                 TargetPos = (Vector2)transform.position + Vector2.left;
                 StartPos = transform.position;
+                LastMove = Vector2.left;
                 StartMove();
             }
             else if (Input.GetKeyDown(KeyCode.RightArrow) == true || Input.GetKeyDown(KeyCode.D) == true)
@@ -56,6 +69,7 @@ public class TileMove : MonoBehaviour {
                 Moving = true;
                 TargetPos = (Vector2)transform.position + Vector2.right;
                 StartPos = transform.position;
+                LastMove = Vector2.right;
                 StartMove();
             }
 
@@ -85,34 +99,170 @@ public class TileMove : MonoBehaviour {
         
         //Pink (and Start) = Floor: No special function - DONE
         //Red (and Border) = Wall: Cannot move through it - DONE
-        //Yellow (and Static) = Electric: Destroys the Player & restarts the puzzle - 
+        //Yellow (and Static) = Electric: Destroys the Player & restarts the puzzle - DONE
         //Orange = Helium: Makes the Player "Light;" Light can not pass over Fan (Blue) tiles,
-        //but can pass over Trapdoor (Green) tiles - 
+        //but can pass over Trapdoor (Green) tiles - DONE
         //Purple = Factory: Makes the Player "Heavy" and pushes them to the next tile;
-        //Heavy can pass over Fan (Blue) tiles, but can not pass over Trapdoor (Green) tiles - 
+        //Heavy can pass over Fan (Blue) tiles, but can not pass over Trapdoor (Green) tiles - DONE
         //Blue = Fan: Light can not pass over it; Overdrives when next to an Electric (Yellow) tile
-        //(Nothing can pass over it when Overdriven) - 
-        //Green = Trapdoor: Heavy can not pass over it - 
+        //(Nothing can pass over it when Overdriven) - DONE
+        //Green = Trapdoor: Heavy can not pass over it - DONE
         //Border: Walls off the puzzle; same function as Wall (Red) - DONE
-        //Static: Appears as game becomes corrupted; same function as Electric (Yellow) - 
-        //Start: Player starts here; same function as Floor (Pink) - 
-        //End: Touch to end puzzle - 
+        //Static: Appears as game becomes corrupted; same function as Electric (Yellow) - DONE
+        //Start: Player starts here; same function as Floor (Pink) - DONE
+        //End: Touch to end puzzle - DONE
+
+        //Button?
+        //Moving?
+        //Teleport?
     }
 
     void StopMovement()
     {
         Moving = false;
 
-        transform.position = CurrentTile.transform.position;
+        if(CurrentTile.tag == "Yellow")
+        {
+            Invoke("reload", 1);
+            //Death Animation?
+        }
 
-        CanMove = true;
-        //Debug.Log("Movement Complete");
+        else if(CurrentTile.tag == "End")
+        {
+            Invoke("NextStage", 1);
+        }
+
+        else if(CurrentTile.tag == "Purple")
+        {
+            Weight = 1;
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(200 / 225f, 145 / 255f, 1);
+            Moving = true;
+            TargetPos = (Vector2)transform.position + LastMove;
+            StartPos = transform.position;
+
+            RaycastHit2D Hit = Physics2D.Raycast(StartPos + (TargetPos - StartPos) * .5f, TargetPos - StartPos, 1);
+            if (Hit.collider.tag == "Red")
+            {
+                Moving = false;
+                transform.position = CurrentTile.transform.position;
+                CanMove = true;
+            }
+        }
+
+
+        else
+        {
+            if(CurrentTile.tag == "Orange")
+            {
+                Weight = -1;
+                gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 200/255f, 145/255f);
+            }
+
+            if(CurrentTile.tag == "Green" && (Weight == 1 || Weight == 0))
+            {
+                CurrentTile = PrevTile;
+            }
+
+            if (CurrentTile.tag == "Blue" && (Weight == -1 || Weight == 0))
+            {
+                CurrentTile = PrevTile;
+            }
+
+            else if(CurrentTile.tag == "Blue")
+            {
+                RaycastHit2D Hit = Physics2D.Raycast(StartPos + (TargetPos - StartPos) * .5f, 
+                                                     TargetPos - StartPos,
+                                                     1);
+
+                GameObject[] Neighbors = GetNeigh(Hit.collider.gameObject);
+                for (int i = 0; i < Neighbors.Length; i++)
+                {
+                    if(Neighbors[i].tag == "Yellow")
+                    {
+                        CurrentTile = PrevTile;
+                    }
+                }
+            }
+
+            transform.position = CurrentTile.transform.position;
+
+            CanMove = true;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //Debug.Log("Collided");
+        if (CurrentTile != null)
+        {
+            PrevTile = CurrentTile;
+        }
         CurrentTile = collision.gameObject;
+    }
+
+    GameObject[] GetNeigh(GameObject TargetTile)
+    {
+        GameObject[] Neighbors = new GameObject[4];
+
+        RaycastHit2D Hit = Physics2D.Raycast((Vector2)TargetTile.transform.position + Vector2.up * .5f, Vector2.up, 1);
+        Neighbors[0] = Hit.collider.gameObject;
+        Hit = Physics2D.Raycast((Vector2)TargetTile.transform.position + Vector2.down * .5f, Vector2.down, 1);
+        Neighbors[1] = Hit.collider.gameObject;
+        Hit = Physics2D.Raycast((Vector2)TargetTile.transform.position + Vector2.left * .5f, Vector2.left, 1);
+        Neighbors[2] = Hit.collider.gameObject;
+        Hit = Physics2D.Raycast((Vector2)TargetTile.transform.position + Vector2.right * .5f, Vector2.right, 1);
+        Neighbors[3] = Hit.collider.gameObject;
+
+        return Neighbors;
+    }
+
+    void reload()
+    {
+        transform.position = OldStart.transform.position;
+        Moving = false;
+        CanMove = true;
+        Weight = 0;
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1);
+    }
+
+    void NextStage()
+    {
+        End = CurrentTile.GetComponent<EndTile>();
+
+        if(End.NewStart != null)
+        {
+            transform.position = End.NewStart.transform.position;
+            Weight = 0;
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1);
+
+            InvokeRepeating("CameraUpdate", 0, .016f);
+        }
+
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+    }
+
+    void CameraUpdate()
+    {
+
+        if(Camera.main.orthographicSize <= End.CamSize)
+        {
+            Camera.main.orthographicSize += Time.deltaTime * (CamSpeed/2);
+        }
+
+        if(Camera.main.transform.position.x <= End.CamX)
+        {
+            Camera.main.transform.position += Time.deltaTime * CamSpeed * Vector3.right;
+        }
+
+        if(Camera.main.orthographicSize > End.CamSize && Camera.main.transform.position.x > End.CamX)
+        {
+            CancelInvoke("CameraUpdate");
+            Moving = false;
+            CanMove = true;
+        }
     }
 
 }

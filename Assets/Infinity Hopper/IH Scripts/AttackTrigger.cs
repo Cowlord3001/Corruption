@@ -10,11 +10,11 @@ public class AttackTrigger : MonoBehaviour {
     
     void Attack()
     {
-        int x = Random.Range(0, 3);
-        int y = Random.Range(0, 3);
+        int x = Random.Range(0, 4);
+        int y = Random.Range(0, 4);
         while (y == x)
         {
-            y = Random.Range(0, 3);
+            y = Random.Range(0, 4);
         }
 
         for (int i = 0; i < 4; i++)
