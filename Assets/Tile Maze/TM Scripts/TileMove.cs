@@ -232,10 +232,11 @@ public class TileMove : MonoBehaviour {
         if(End.NewStart != null)
         {
             transform.position = End.NewStart.transform.position;
+            OldStart = End.NewStart;
             Weight = 0;
             gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1);
 
-            InvokeRepeating("CameraUpdate", 0, .016f);
+            InvokeRepeating("CameraUpdate", 0, .008f);
         }
 
         else
