@@ -173,13 +173,19 @@ public class TileMove : MonoBehaviour {
                 RaycastHit2D Hit = Physics2D.Raycast(StartPos + (TargetPos - StartPos) * .5f, 
                                                      TargetPos - StartPos,
                                                      1);
-
-                GameObject[] Neighbors = GetNeigh(Hit.collider.gameObject);
-                for (int i = 0; i < Neighbors.Length; i++)
+                if (Hit.collider.tag == "Red")
                 {
-                    if(Neighbors[i].tag == "Yellow")
+                    
+                }
+                else
+                {
+                    GameObject[] Neighbors = GetNeigh(Hit.collider.gameObject);
+                    for (int i = 0; i < Neighbors.Length; i++)
                     {
-                        CurrentTile = PrevTile;
+                        if (Neighbors[i].tag == "Yellow")
+                        {
+                            CurrentTile = PrevTile;
+                        }
                     }
                 }
             }
@@ -205,13 +211,17 @@ public class TileMove : MonoBehaviour {
         GameObject[] Neighbors = new GameObject[4];
 
         RaycastHit2D Hit = Physics2D.Raycast((Vector2)TargetTile.transform.position + Vector2.up * .5f, Vector2.up, 1);
-        Neighbors[0] = Hit.collider.gameObject;
+        if(Hit.collider != null)
+            Neighbors[0] = Hit.collider.gameObject;
         Hit = Physics2D.Raycast((Vector2)TargetTile.transform.position + Vector2.down * .5f, Vector2.down, 1);
-        Neighbors[1] = Hit.collider.gameObject;
+        if (Hit.collider != null)
+            Neighbors[1] = Hit.collider.gameObject;
         Hit = Physics2D.Raycast((Vector2)TargetTile.transform.position + Vector2.left * .5f, Vector2.left, 1);
-        Neighbors[2] = Hit.collider.gameObject;
+        if (Hit.collider != null)
+            Neighbors[2] = Hit.collider.gameObject;
         Hit = Physics2D.Raycast((Vector2)TargetTile.transform.position + Vector2.right * .5f, Vector2.right, 1);
-        Neighbors[3] = Hit.collider.gameObject;
+        if (Hit.collider != null)
+            Neighbors[3] = Hit.collider.gameObject;
 
         return Neighbors;
     }
