@@ -110,9 +110,9 @@ public class TileMove : MonoBehaviour {
         //Border: Walls off the puzzle; same function as Wall (Red) - DONE
         //Static: Appears as game becomes corrupted; same function as Electric (Yellow) - DONE
         //Start: Player starts here; same function as Floor (Pink) - DONE
-        //End: Touch to end puzzle - DONE
 
-        //Button?
+        //End: Touch to end puzzle - DONE
+        //Grey = Button: Disables or Changes Tiles - 
         //Moving?
         //Teleport?
     }
@@ -121,6 +121,7 @@ public class TileMove : MonoBehaviour {
     {
         Moving = false;
 
+        //End Function Early || Change Movement
         if(CurrentTile.tag == "Yellow")
         {
             Invoke("reload", 1);
@@ -152,6 +153,7 @@ public class TileMove : MonoBehaviour {
 
         else
         {
+            //Landing on Tile
             if(CurrentTile.tag == "Orange")
             {
                 Weight = -1;
@@ -188,6 +190,12 @@ public class TileMove : MonoBehaviour {
                         }
                     }
                 }
+            }
+
+            if(CurrentTile.tag == "Button")
+            {
+                CurrentTile.SendMessage("Change");
+                //Multiple Scripts can Run -- Change Multiple Things
             }
 
             transform.position = CurrentTile.transform.position;

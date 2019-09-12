@@ -16,6 +16,7 @@ TagManager:
   - Purple
   - Pink
   - End
+  - Button
   layers:
   - Default
   - TransparentFX
