@@ -17,6 +17,7 @@ TagManager:
   - Pink
   - End
   - Button
+  - Moving
   layers:
   - Default
   - TransparentFX

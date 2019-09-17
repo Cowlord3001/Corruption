@@ -64,6 +64,7 @@ public class HopperControls : MonoBehaviour {
 
         if (collision.gameObject.tag == "Spike" && Playtesting_Mode == false)
         {
+            GetComponent<SpriteRenderer>().color = new Color(100/255, 0, 0);
             speed = 0;
             CanJump = false;
             JumpCool = true;
