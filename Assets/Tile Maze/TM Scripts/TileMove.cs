@@ -112,8 +112,8 @@ public class TileMove : MonoBehaviour {
         //Start: Player starts here; same function as Floor (Pink) - DONE
 
         //End: Touch to end puzzle - DONE
-        //Grey = Button: Disables or Changes Tiles - 
-        //Moving?
+        //Grey = Button: Disables or Changes Tiles - DONE
+        //Brown = Moving: Moves between Waypoints on a Loop - 
         //Teleport?
     }
 
@@ -149,7 +149,7 @@ public class TileMove : MonoBehaviour {
                 CanMove = true;
             }
         }
-
+        
 
         else
         {
@@ -270,13 +270,17 @@ public class TileMove : MonoBehaviour {
         {
             Camera.main.orthographicSize += Time.deltaTime * (CamSpeed/2);
         }
+        //else
+        //{
+        //    Camera.main.orthographicSize = End.CamSize;
+        //}
 
         if(Camera.main.transform.position.x <= End.CamX)
         {
             Camera.main.transform.position += Time.deltaTime * CamSpeed * Vector3.right;
         }
 
-        if(Camera.main.orthographicSize > End.CamSize && Camera.main.transform.position.x > End.CamX)
+        if (Camera.main.orthographicSize > End.CamSize && Camera.main.transform.position.x > End.CamX)
         {
             CancelInvoke("CameraUpdate");
             Moving = false;
