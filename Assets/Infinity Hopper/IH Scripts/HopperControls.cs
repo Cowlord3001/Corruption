@@ -11,6 +11,9 @@ public class HopperControls : MonoBehaviour {
     //New Bool
     public static bool JumpCool;
     Rigidbody2D Mybody;
+    public AudioSource Jump;
+    public AudioSource Death;
+    public AudioSource End;
 
     public bool Playtesting_Mode;
 
@@ -38,12 +41,14 @@ public class HopperControls : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Mouse0) && CanJump == true && JumpCool == true)
         {
+            Jump.Play();
             Mybody.velocity = Vector3.up * jumpheight;
             CanJump = false;
         }
         //New Stuff: Allows unlimited jump if in Stage 3
         else if (Input.GetKeyDown(KeyCode.Mouse0) && JumpCool == false)
         {
+            Jump.Play();
             Mybody.velocity = Vector3.up * jumpheight;
         }
 
@@ -64,6 +69,7 @@ public class HopperControls : MonoBehaviour {
 
         if (collision.gameObject.tag == "Spike" && Playtesting_Mode == false)
         {
+            Death.Play();
             GetComponent<SpriteRenderer>().color = new Color(100/255, 0, 0);
             speed = 0;
             CanJump = false;
@@ -78,6 +84,7 @@ public class HopperControls : MonoBehaviour {
 
         else if(collision.gameObject.tag == "Finish")
         {
+            End.Play();
             speed = 0;
             CanJump = false;
             JumpCool = true;
@@ -86,6 +93,7 @@ public class HopperControls : MonoBehaviour {
 
         else if (collision.gameObject.tag == "Reflected")
         {
+            End.Play();
             Boss1Attack.GreenHit = true;
             collision.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(-23, 0);
             collision.gameObject.GetComponent<PolygonCollider2D>().isTrigger = true;

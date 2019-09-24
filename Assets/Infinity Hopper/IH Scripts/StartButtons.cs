@@ -17,6 +17,13 @@ public class StartButtons : MonoBehaviour {
 
     public void InfinityStart()
     {
+        GetComponent<AudioSource>().Play();
+        Invoke("LoadScene", .2f);
+    }
+
+    void LoadScene()
+    {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
+
 }

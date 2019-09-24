@@ -27,6 +27,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Tile Maze Start.unity
     guid: 06cb875c9fb4dca44be9cc9f3354fa19
   - enabled: 1
-    path: Assets/Scenes/Tile Maze Puzzle 1.unity
+    path: Assets/Scenes/Tile Maze Tutorial.unity
     guid: 3a66a62fd4a33d64684787188ee06d93
   m_configObjects: {}
