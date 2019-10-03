@@ -6,12 +6,15 @@ public class Boss1Tech : MonoBehaviour {
     
     public GameObject[] BossTiles;
     public float TileLength;
-    int BossHealth = 2;
+    int BossHealth = 1;
     GameObject ATile;
     public GameObject EndPortal;
 
-	// Use this for initialization
-	void Start ()
+    public AudioSource Damage;
+    public AudioSource Death;
+
+    // Use this for initialization
+    void Start ()
     {
         SpawnTiles();
 	}
@@ -37,12 +40,14 @@ public class Boss1Tech : MonoBehaviour {
                 ATile.SetActive(false);
                 Rigidbody2D Mybody = gameObject.transform.parent.gameObject.AddComponent<Rigidbody2D>();
                 Mybody.angularVelocity = 720;
+                InvokeRepeating("DeathSounds", 0, .25f);
                 Invoke("die", 5);
             }
 
             else
             {
                 BossHealth -= 1;
+                Damage.Play();
                 Destroy(collision.gameObject);
                 ATile.SetActive(false);
                 SpawnTiles();
@@ -71,5 +76,10 @@ public class Boss1Tech : MonoBehaviour {
             ATile.SetActive(true);
         }
 
+    }
+
+    void DeathSounds()
+    {
+        Death.Play();
     }
 }

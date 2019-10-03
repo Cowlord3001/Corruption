@@ -15,6 +15,8 @@ public class HopperControls : MonoBehaviour {
     public AudioSource Death;
     public AudioSource End;
 
+    bool Dead = false;
+
     public bool Playtesting_Mode;
 
 	// Use this for initialization
@@ -39,14 +41,14 @@ public class HopperControls : MonoBehaviour {
 	void Update ()
     {
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && CanJump == true && JumpCool == true)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && CanJump == true && JumpCool == true && Dead == false)
         {
             Jump.Play();
             Mybody.velocity = Vector3.up * jumpheight;
             CanJump = false;
         }
         //New Stuff: Allows unlimited jump if in Stage 3
-        else if (Input.GetKeyDown(KeyCode.Mouse0) && JumpCool == false)
+        else if (Input.GetKeyDown(KeyCode.Mouse0) && JumpCool == false && Dead == false)
         {
             Jump.Play();
             Mybody.velocity = Vector3.up * jumpheight;
@@ -69,7 +71,11 @@ public class HopperControls : MonoBehaviour {
 
         if (collision.gameObject.tag == "Spike" && Playtesting_Mode == false)
         {
-            Death.Play();
+            if(Dead != true)
+            {
+                Death.Play();
+            }
+            Dead = true;
             GetComponent<SpriteRenderer>().color = new Color(100/255, 0, 0);
             speed = 0;
             CanJump = false;
@@ -84,7 +90,11 @@ public class HopperControls : MonoBehaviour {
 
         else if(collision.gameObject.tag == "Finish")
         {
-            End.Play();
+            if (Dead != true)
+            {
+                End.Play();
+            }
+            Dead = true;
             speed = 0;
             CanJump = false;
             JumpCool = true;

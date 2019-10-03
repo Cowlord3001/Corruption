@@ -23,8 +23,12 @@ public class TileMove : MonoBehaviour {
 
     public int Weight;
 
-	// Use this for initialization
-	void Start ()
+    public AudioSource Move;
+    public AudioSource Finish;
+    public AudioSource Yellow;
+
+    // Use this for initialization
+    void Start ()
     {
         CanMove = true;
 	}
@@ -96,6 +100,10 @@ public class TileMove : MonoBehaviour {
         {
             StopMovement();
         }
+        else
+        {
+            Move.Play();
+        }
         
         //Pink (and Start) = Floor: No special function - DONE
         //Red (and Border) = Wall: Cannot move through it - DONE
@@ -124,12 +132,14 @@ public class TileMove : MonoBehaviour {
         //End Function Early || Change Movement
         if(CurrentTile.tag == "Yellow")
         {
+            Yellow.Play();
             Invoke("reload", 1);
             //Death Animation?
         }
 
         else if(CurrentTile.tag == "End")
         {
+            Finish.Play();
             Invoke("NextStage", 1);
         }
 
