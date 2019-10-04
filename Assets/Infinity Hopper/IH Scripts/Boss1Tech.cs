@@ -6,7 +6,7 @@ public class Boss1Tech : MonoBehaviour {
     
     public GameObject[] BossTiles;
     public float TileLength;
-    int BossHealth = 1;
+    int BossHealth = 2;
     GameObject ATile;
     public GameObject EndPortal;
 
