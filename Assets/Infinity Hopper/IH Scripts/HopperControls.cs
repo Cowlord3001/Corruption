@@ -119,5 +119,11 @@ public class HopperControls : MonoBehaviour {
     void NextStage()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        if(SceneManager.GetActiveScene().buildIndex != 1)
+        {
+            Persist.Song = false;
+            Destroy(GameObject.Find("Music"));
+        }
+        
     }
 }
