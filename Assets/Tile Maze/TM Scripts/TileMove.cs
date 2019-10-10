@@ -275,7 +275,6 @@ public class TileMove : MonoBehaviour {
 
     void CameraUpdate()
     {
-
         if(Camera.main.orthographicSize <= End.CamSize)
         {
             Camera.main.orthographicSize += Time.deltaTime * (CamSpeed/2);
