@@ -17,6 +17,8 @@ public class TileMove : MonoBehaviour {
     EndTile End;
     public GameObject OldStart;
     public float CamSpeed;
+    float CamDir;
+    float CamSize;
 
     Vector2 LastMove;
     GameObject PrevTile;
@@ -264,6 +266,9 @@ public class TileMove : MonoBehaviour {
             Weight = 0;
             gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1);
 
+            CamDir = End.CamX - Camera.main.transform.position.x;
+            CamSize = End.CamSize - Camera.main.orthographicSize;
+
             InvokeRepeating("CameraUpdate", 0, .008f);
         }
 
@@ -275,25 +280,30 @@ public class TileMove : MonoBehaviour {
 
     void CameraUpdate()
     {
-        if(Camera.main.orthographicSize <= End.CamSize)
-        {
-            Camera.main.orthographicSize += Time.deltaTime * (CamSpeed/2);
-        }
-        //else
-        //{
-        //    Camera.main.orthographicSize = End.CamSize;
-        //}
 
-        if(Camera.main.transform.position.x <= End.CamX)
+        float sizedif = Mathf.Abs (End.CamSize - Camera.main.orthographicSize);
+        float posdif = Mathf.Abs (End.CamX - Camera.main.transform.position.x);
+
+        if (sizedif > .1)
         {
-            Camera.main.transform.position += Time.deltaTime * CamSpeed * Vector3.right;
+            Camera.main.orthographicSize += Time.deltaTime * (CamSpeed/2 * CamDir/Mathf.Abs(CamDir));
         }
 
-        if (Camera.main.orthographicSize > End.CamSize && Camera.main.transform.position.x > End.CamX)
+        if (posdif > .1)
+        {
+            Camera.main.transform.position += Time.deltaTime * (CamSpeed * CamDir / Mathf.Abs(CamDir) * Vector3.right);
+        }
+
+        Debug.Log(sizedif);
+        Debug.Log(posdif);
+
+        if (sizedif <= .1 && posdif <= .1)
         {
             CancelInvoke("CameraUpdate");
             Moving = false;
             CanMove = true;
+            Camera.main.orthographicSize = End.CamSize;
+            Camera.main.transform.position = new Vector3(End.CamX, 0, -10);
         }
     }
 

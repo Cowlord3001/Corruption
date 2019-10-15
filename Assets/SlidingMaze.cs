@@ -14,6 +14,7 @@ public class SlidingMaze : MonoBehaviour {
         Tiles = new int[35, 19];
         MainPath();
         DrawBoard();
+        //Tiles[_,_] = _ {0-2}
 	}
 	
 	// Update is called once per frame
@@ -111,5 +112,26 @@ public class SlidingMaze : MonoBehaviour {
                 }
             }
         }
+    }
+
+    List<int> RandDist(int X, int Y, Vector2 Dir)
+    {
+        List<int> GoodBlocks = new List<int>();
+        X += (int)Dir.x;
+        Y += (int)Dir.y;
+
+        if(Tiles[X, Y] != -1)
+        {
+            if(Dir.x == 0)
+            {
+                GoodBlocks.Add(Y);
+            }
+            else if(Dir.y == 0)
+            {
+                GoodBlocks.Add(X);
+            }
+            
+        }
+        return GoodBlocks;
     }
 }
