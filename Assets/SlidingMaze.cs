@@ -55,7 +55,14 @@ public class SlidingMaze : MonoBehaviour {
         Tiles[0, Start] = 2;
         X = 0;
         Y = Start;
-        Vector2 Dir = RandDir(X, Y);
+        for (int i = 0; i < 7; i++)
+        {
+            Vector2 Dir = RandDir(X, Y);
+            Vector2 BlockCoords = RandCoords(X, Y, Dir);
+            Tiles[(int)BlockCoords.x, (int)BlockCoords.y] = 1;
+            X = (int)BlockCoords.x - (int)Dir.x;
+            Y = (int)BlockCoords.y - (int)Dir.y;
+        }
     }
 
     Vector2 RandDir(int X, int Y)
@@ -114,24 +121,53 @@ public class SlidingMaze : MonoBehaviour {
         }
     }
 
-    List<int> RandDist(int X, int Y, Vector2 Dir)
+    Vector2 RandCoords(int X, int Y, Vector2 Dir)
     {
         List<int> GoodBlocks = new List<int>();
-        X += (int)Dir.x;
-        Y += (int)Dir.y;
-
-        if(Tiles[X, Y] != -1)
+        while (X < 35 && Y < 19 && X >= 0 && Y >= 0)
         {
-            if(Dir.x == 0)
+            //if(Tiles[X, Y] == 1)
+            //{
+            //    Debug.Log("Hit a Red");
+            //    break;
+            //}
+
+            if (Tiles[X, Y] != -1 && Tiles[X, Y] != 2)
             {
-                GoodBlocks.Add(Y);
+                if (Dir.x == 0)
+                {
+                    GoodBlocks.Add(Y);
+                }
+                else if (Dir.y == 0)
+                {
+                    GoodBlocks.Add(X);
+                }
+
             }
-            else if(Dir.y == 0)
-            {
-                GoodBlocks.Add(X);
-            }
-            
+
+            X += (int)Dir.x;
+            Y += (int)Dir.y;
         }
-        return GoodBlocks;
+
+        int End = Random.Range(0, GoodBlocks.Count);
+
+        Vector2 EndCoords;
+        if (Dir.x == 0)
+        {
+            EndCoords = new Vector2(X, GoodBlocks[End]);
+            for (int i = 0; i < End; i++)
+            {
+                Tiles[X, GoodBlocks[i]] = -1;
+            }
+        }
+        else
+        {
+            EndCoords = new Vector2(GoodBlocks[End], Y);
+            for (int i = 0; i < End; i++)
+            {
+                Tiles[GoodBlocks[i], Y] = -1;
+            }
+        }
+        return EndCoords;
     }
 }
