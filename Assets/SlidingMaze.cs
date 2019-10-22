@@ -12,8 +12,9 @@ public class SlidingMaze : MonoBehaviour {
 	void Start ()
     {
         Tiles = new int[35, 19];
-        MainPath();
-        DrawBoard();
+        Invoke("MainPath", 5);
+        //MainPath();
+        //DrawBoard();
         //Tiles[_,_] = _ {0-2}
 	}
 	
@@ -51,7 +52,7 @@ public class SlidingMaze : MonoBehaviour {
     void MainPath()
     {
         int X, Y;
-        int Start = Random.Range(0, 18);
+        int Start = Random.Range(0, 19);
         Tiles[0, Start] = 2;
         X = 0;
         Y = Start;
@@ -59,70 +60,119 @@ public class SlidingMaze : MonoBehaviour {
         {
             Vector2 Dir = RandDir(X, Y);
             Vector2 BlockCoords = RandCoords(X, Y, Dir);
-            Tiles[(int)BlockCoords.x, (int)BlockCoords.y] = 1;
+            if( (BlockCoords.x == 34 && (int)Dir.x > 0)
+                || (BlockCoords.x == 0 && (int)Dir.x < 0)
+                || (BlockCoords.y == 18 && (int)Dir.y > 0)
+                || (BlockCoords.y == 0 && (int)Dir.y < 0))
+            {
+                Tiles[(int)BlockCoords.x, (int)BlockCoords.y] = -1;
+            }
+            else
+            {
+                Tiles[(int)BlockCoords.x, (int)BlockCoords.y] = 1;
+            }
+
             X = (int)BlockCoords.x - (int)Dir.x;
             Y = (int)BlockCoords.y - (int)Dir.y;
+            Debug.Log(Dir);
         }
+
+        DrawBoard();
     }
 
     Vector2 RandDir(int X, int Y)
     {
-        while (true)
+
+        List<Vector2> Dirs = new List<Vector2>();
+        
+        if (Y != 18 && Tiles[X, Y + 1] == 0)
+            {
+                Dirs.Add(Vector2.up);
+            }
+
+        if (Y != 0 && Tiles[X, Y - 1] == 0)
         {
-            int Rand = Random.Range(0, 3);
-
-            if(Rand == 0)
-            {
-                if(Y == 19)
-                {
-
-                }
-                else if(Tiles[X, Y+1] == 0)
-                {
-                    return Vector2.up;
-                }
-            }
-
-            if (Rand == 1)
-            {
-                if (X == 35)
-                {
-
-                }
-                else if (Tiles[X + 1, Y] == 0)
-                {
-                    return Vector2.right;
-                }
-            }
-
-            if (Rand == 2)
-            {
-                if (Y == 0)
-                {
-
-                }
-                else if (Tiles[X, Y - 1] == 0)
-                {
-                    return Vector2.down;
-                }
-            }
-
-            if (Rand == 3)
-            {
-                if (X == 0)
-                {
-
-                }
-                else if (Tiles[X - 1, Y] == 0)
-                {
-                    return Vector2.left;
-                }
-            }
+            Dirs.Add(Vector2.down);
         }
+
+        if (X != 34 && Tiles[X + 1, Y] == 0)
+        {
+            Dirs.Add(Vector2.right);
+        }
+
+        if (X != 0 && Tiles[X - 1, Y] == 0)
+        {
+            Dirs.Add(Vector2.left);
+        }
+
+        int i = Random.Range(0, Dirs.Count);
+        return Dirs[i];
+
+        //while (true)
+        //{
+
+        //    int Rand = Random.Range(0, 3);
+
+        //    if(Rand == 0)
+        //    {
+        //        if(Y == 19)
+        //        {
+
+        //        }
+        //        else if(Tiles[X, Y+1] == 0)
+        //        {
+        //            return Vector2.up;
+        //        }
+        //    }
+
+        //    if (Rand == 1)
+        //    {
+        //        if (X == 35)
+        //        {
+
+        //        }
+        //        else if (Tiles[X + 1, Y] == 0)
+        //        {
+        //            return Vector2.right;
+        //        }
+        //    }
+
+        //    if (Rand == 2)
+        //    {
+        //        if (Y == 0)
+        //        {
+
+        //        }
+        //        else if (Tiles[X, Y - 1] == 0)
+        //        {
+        //            return Vector2.down;
+        //        }
+        //    }
+
+        //    if (Rand == 3)
+        //    {
+        //        if (X == 0)
+        //        {
+
+        //        }
+        //        else if (Tiles[X - 1, Y] == 0)
+        //        {
+        //            return Vector2.left;
+        //        }
+        //    }
+        //}
     }
 
     Vector2 RandCoords(int X, int Y, Vector2 Dir)
     {
+        X += (int)Dir.x;
+        Y += (int)Dir.y;
+
+        Tiles[X, Y] = -1;
+
+        X += (int)Dir.x;
+        Y += (int)Dir.y;
+
         List<int> GoodBlocks = new List<int>();
         while (X < 35 && Y < 19 && X >= 0 && Y >= 0)
         {

@@ -294,8 +294,8 @@ public class TileMove : MonoBehaviour {
             Camera.main.transform.position += Time.deltaTime * (CamSpeed * CamDir / Mathf.Abs(CamDir) * Vector3.right);
         }
 
-        Debug.Log(sizedif);
-        Debug.Log(posdif);
+        //Debug.Log(sizedif);
+        //Debug.Log(posdif);
 
         if (sizedif <= .1 && posdif <= .1)
         {
