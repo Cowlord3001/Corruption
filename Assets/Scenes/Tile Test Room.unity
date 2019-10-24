@@ -11140,6 +11140,7 @@ MonoBehaviour:
   PurpleTile: {fileID: 159894621}
   StartTile: {fileID: 879945640}
   EndTile: {fileID: 425700960}
+  PinkTile: {fileID: 1446203542}
 --- !u!4 &423190320
 Transform:
   m_ObjectHideFlags: 0

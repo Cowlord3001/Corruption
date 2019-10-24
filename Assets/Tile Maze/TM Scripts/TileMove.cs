@@ -18,7 +18,6 @@ public class TileMove : MonoBehaviour {
     public GameObject OldStart;
     public float CamSpeed;
     float CamDir;
-    float CamSize;
 
     Vector2 LastMove;
     GameObject PrevTile;
@@ -267,7 +266,6 @@ public class TileMove : MonoBehaviour {
             gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1);
 
             CamDir = End.CamX - Camera.main.transform.position.x;
-            CamSize = End.CamSize - Camera.main.orthographicSize;
 
             InvokeRepeating("CameraUpdate", 0, .008f);
         }

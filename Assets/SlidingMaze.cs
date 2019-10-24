@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SlidingMaze : MonoBehaviour {
 
-    public GameObject RedTile, PurpleTile, StartTile, EndTile;
+    public GameObject RedTile, PurpleTile, StartTile, EndTile, PinkTile;
     public int[ , ] Tiles;
 
 
@@ -12,7 +12,7 @@ public class SlidingMaze : MonoBehaviour {
 	void Start ()
     {
         Tiles = new int[35, 19];
-        Invoke("MainPath", 5);
+        Invoke("MainPath", 1);
         //MainPath();
         //DrawBoard();
         //Tiles[_,_] = _ {0-2}
@@ -45,6 +45,10 @@ public class SlidingMaze : MonoBehaviour {
                     Instantiate(StartTile, transform.position + new Vector3(i, j, 0), Quaternion.identity);
 
                 }
+                else if (Tiles[i, j] == -1)
+                {
+                    Instantiate(PinkTile, transform.position + new Vector3(i, j, 0), Quaternion.identity);
+                }
             }
         }
     }
@@ -60,20 +64,40 @@ public class SlidingMaze : MonoBehaviour {
         {
             Vector2 Dir = RandDir(X, Y);
             Vector2 BlockCoords = RandCoords(X, Y, Dir);
-            if( (BlockCoords.x == 34 && (int)Dir.x > 0)
-                || (BlockCoords.x == 0 && (int)Dir.x < 0)
-                || (BlockCoords.y == 18 && (int)Dir.y > 0)
-                || (BlockCoords.y == 0 && (int)Dir.y < 0))
+            //if( (BlockCoords.x == 34 && (int)Dir.x > 0)
+            //    || (BlockCoords.x == 0 && (int)Dir.x < 0)
+            //    || (BlockCoords.y == 18 && (int)Dir.y > 0)
+            //    || (BlockCoords.y == 0 && (int)Dir.y < 0))
+            //{
+            //    Tiles[(int)BlockCoords.x, (int)BlockCoords.y] = -1;
+
+            //    X = (int)BlockCoords.x;
+            //    Y = (int)BlockCoords.y;
+            //}
+            //else
+            //{
+
+            if(Mathf.Abs(Dir.x) > .01)
             {
-                Tiles[(int)BlockCoords.x, (int)BlockCoords.y] = -1;
+                for (int j = 0; j < 19; j++)
+                {
+                    Tiles[(int)BlockCoords.x, (int)j] = -1;
+                }
             }
             else
             {
-                Tiles[(int)BlockCoords.x, (int)BlockCoords.y] = 1;
+                for (int j = 0; j < 35; j++)
+                {
+                    Tiles[j, (int)BlockCoords.y] = -1;
+                }
             }
+
+            Tiles[(int)BlockCoords.x, (int)BlockCoords.y] = 1;
 
             X = (int)BlockCoords.x - (int)Dir.x;
             Y = (int)BlockCoords.y - (int)Dir.y;
+            //}
+
             Debug.Log(Dir);
         }
 
@@ -85,22 +109,22 @@ public class SlidingMaze : MonoBehaviour {
 
         List<Vector2> Dirs = new List<Vector2>();
         
-        if (Y != 18 && Tiles[X, Y + 1] == 0)
+        if (Y < 17 && Tiles[X, Y + 1] == 0 && Tiles[X, Y + 2] == 0)
             {
                 Dirs.Add(Vector2.up);
             }
 
-        if (Y != 0 && Tiles[X, Y - 1] == 0)
+        if (Y > 1 && Tiles[X, Y - 1] == 0 && Tiles[X, Y - 2] == 0)
         {
             Dirs.Add(Vector2.down);
         }
 
-        if (X != 34 && Tiles[X + 1, Y] == 0)
+        if (X < 33 && Tiles[X + 1, Y] == 0 && Tiles[X + 2, Y] == 0)
         {
             Dirs.Add(Vector2.right);
         }
 
-        if (X != 0 && Tiles[X - 1, Y] == 0)
+        if (X > 1 && Tiles[X - 1, Y] == 0 && Tiles[X - 2, Y] == 0)
         {
             Dirs.Add(Vector2.left);
         }
