@@ -55,14 +55,22 @@ public class SlidingMaze : MonoBehaviour {
 
     void MainPath()
     {
+        Vector2 Dir = Vector2.left;
         int X, Y;
         int Start = Random.Range(0, 19);
         Tiles[0, Start] = 2;
+        Tiles[0, Start + 1] = -1;
+        Tiles[0, Start - 1] = -1;
+        for (int j = 1; j < 35; j++)
+        {
+            if (Tiles[j, Start] == 0)
+                Tiles[j, Start] = -1;
+        }
         X = 0;
         Y = Start;
         for (int i = 0; i < 7; i++)
         {
-            Vector2 Dir = RandDir(X, Y);
+            Dir = RandDir(X, Y, Dir);
             Vector2 BlockCoords = RandCoords(X, Y, Dir);
             //if( (BlockCoords.x == 34 && (int)Dir.x > 0)
             //    || (BlockCoords.x == 0 && (int)Dir.x < 0)
@@ -81,6 +89,7 @@ public class SlidingMaze : MonoBehaviour {
             {
                 for (int j = 0; j < 19; j++)
                 {
+                    if(Tiles[(int)BlockCoords.x, (int)j] == 0)
                     Tiles[(int)BlockCoords.x, (int)j] = -1;
                 }
             }
@@ -88,6 +97,7 @@ public class SlidingMaze : MonoBehaviour {
             {
                 for (int j = 0; j < 35; j++)
                 {
+                    if(Tiles[j, (int)BlockCoords.y] == 0)
                     Tiles[j, (int)BlockCoords.y] = -1;
                 }
             }
@@ -104,87 +114,109 @@ public class SlidingMaze : MonoBehaviour {
         DrawBoard();
     }
 
-    Vector2 RandDir(int X, int Y)
+    Vector2 RandDir(int X, int Y, Vector2 BanDir)
     {
 
         List<Vector2> Dirs = new List<Vector2>();
-        
-        if (Y < 17 && Tiles[X, Y + 1] == 0 && Tiles[X, Y + 2] == 0)
+        bool ValidDir = false;
+
+        //Border
+
+        for (int u = Y; u < 19; u++)
+        {
+            if (Tiles[X, u] == 1)
+            {
+                break;
+            }
+
+            if (Tiles[X,u] == 0)
+            {
+                ValidDir = true;
+            }
+        }
+
+        if (ValidDir == true && Vector2.up != BanDir)
             {
                 Dirs.Add(Vector2.up);
             }
 
-        if (Y > 1 && Tiles[X, Y - 1] == 0 && Tiles[X, Y - 2] == 0)
+        ValidDir = false;
+
+        //Border
+
+        for (int u = Y; u > -1; u--)
+        {
+            if (Tiles[X, u] == 1)
+            {
+                break;
+            }
+
+            if (Tiles[X, u] == 0)
+            {
+                ValidDir = true;
+            }
+        }
+
+        if (ValidDir == true && Vector2.down != BanDir)
         {
             Dirs.Add(Vector2.down);
         }
 
-        if (X < 33 && Tiles[X + 1, Y] == 0 && Tiles[X + 2, Y] == 0)
+        ValidDir = false;
+
+        //Border
+
+        for (int u = X; u < 35; u++)
+        {
+            if (Tiles[u, Y] == 1)
+            {
+                break;
+            }
+
+            if (Tiles[u, Y] == 0)
+            {
+                ValidDir = true;
+            }
+        }
+
+        if (ValidDir == true && Vector2.right != BanDir)
         {
             Dirs.Add(Vector2.right);
         }
 
-        if (X > 1 && Tiles[X - 1, Y] == 0 && Tiles[X - 2, Y] == 0)
+        ValidDir = false;
+
+        //Border
+
+        for (int u = X; u > -1; u--)
+        {
+            if (Tiles[u, Y] == 1)
+            {
+                break;
+            }
+
+            if (Tiles[u, Y] == 0)
+            {
+                ValidDir = true;
+            }
+        }
+
+        if (ValidDir == true && Vector2.left != BanDir)
         {
             Dirs.Add(Vector2.left);
         }
 
+        ValidDir = false;
+
+        //Border
+
         int i = Random.Range(0, Dirs.Count);
+
+        if(Dirs.Count == 0)
+        {
+            DrawBoard();
+        }
         return Dirs[i];
-
-        //while (true)
-        //{
-
-        //    int Rand = Random.Range(0, 3);
-
-        //    if(Rand == 0)
-        //    {
-        //        if(Y == 19)
-        //        {
-
-        //        }
-        //        else if(Tiles[X, Y+1] == 0)
-        //        {
-        //            return Vector2.up;
-        //        }
-        //    }
-
-        //    if (Rand == 1)
-        //    {
-        //        if (X == 35)
-        //        {
-
-        //        }
-        //        else if (Tiles[X + 1, Y] == 0)
-        //        {
-        //            return Vector2.right;
-        //        }
-        //    }
-
-        //    if (Rand == 2)
-        //    {
-        //        if (Y == 0)
-        //        {
-
-        //        }
-        //        else if (Tiles[X, Y - 1] == 0)
-        //        {
-        //            return Vector2.down;
-        //        }
-        //    }
-
-        //    if (Rand == 3)
-        //    {
-        //        if (X == 0)
-        //        {
-
-        //        }
-        //        else if (Tiles[X - 1, Y] == 0)
-        //        {
-        //            return Vector2.left;
-        //        }
-        //    }
-        //}
     }
 
     Vector2 RandCoords(int X, int Y, Vector2 Dir)
