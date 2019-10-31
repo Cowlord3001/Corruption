@@ -32,7 +32,7 @@ public class SlidingMaze : MonoBehaviour {
             {
                 if(Tiles[i,j] == 0)
                 {
-                    Instantiate(PurpleTile, transform.position + new Vector3(i, j, 0), Quaternion.identity);
+                    Instantiate(PinkTile, transform.position + new Vector3(i, j, 0), Quaternion.identity);
 
                 }
                 else if(Tiles[i,j] == 1)
@@ -47,7 +47,7 @@ public class SlidingMaze : MonoBehaviour {
                 }
                 else if (Tiles[i, j] == -1)
                 {
-                    Instantiate(PinkTile, transform.position + new Vector3(i, j, 0), Quaternion.identity);
+                    Instantiate(PurpleTile, transform.position + new Vector3(i, j, 0), Quaternion.identity);
                 }
             }
         }
@@ -59,8 +59,15 @@ public class SlidingMaze : MonoBehaviour {
         int X, Y;
         int Start = Random.Range(0, 19);
         Tiles[0, Start] = 2;
-        Tiles[0, Start + 1] = -1;
-        Tiles[0, Start - 1] = -1;
+        //Start Tile Banning
+        if(Start != 18)
+        {
+            Tiles[0, Start + 1] = -1;
+        }
+        if(Start != 0)
+        {
+            Tiles[0, Start - 1] = -1;
+        }
         for (int j = 1; j < 35; j++)
         {
             if (Tiles[j, Start] == 0)
@@ -68,47 +75,80 @@ public class SlidingMaze : MonoBehaviour {
         }
         X = 0;
         Y = Start;
+
+        //Main Path Loop
         for (int i = 0; i < 7; i++)
         {
             Dir = RandDir(X, Y, Dir);
             Vector2 BlockCoords = RandCoords(X, Y, Dir);
-            //if( (BlockCoords.x == 34 && (int)Dir.x > 0)
-            //    || (BlockCoords.x == 0 && (int)Dir.x < 0)
-            //    || (BlockCoords.y == 18 && (int)Dir.y > 0)
-            //    || (BlockCoords.y == 0 && (int)Dir.y < 0))
-            //{
-            //    Tiles[(int)BlockCoords.x, (int)BlockCoords.y] = -1;
 
-            //    X = (int)BlockCoords.x;
-            //    Y = (int)BlockCoords.y;
-            //}
-            //else
-            //{
-
-            if(Mathf.Abs(Dir.x) > .01)
+            Debug.Log(Dir);
+            //Horizontal or Vertical
+            if (Mathf.Abs(Dir.x) > .01)
             {
-                for (int j = 0; j < 19; j++)
+                Debug.Log(BlockCoords.x);
+                Debug.Log(X);
+                //Horizontal
+                //////////////////////if statements?
+                for (int a = X; a <= (int)BlockCoords.x; a++)
                 {
-                    if(Tiles[(int)BlockCoords.x, (int)j] == 0)
-                    Tiles[(int)BlockCoords.x, (int)j] = -1;
+                    Debug.Log("Banning while moving right");
+                    if (Y != 0 && Tiles[a, Y-1] == 0)
+                    Tiles[a, Y-1] = -1;
+                    if (Y != 18 && Tiles[a, Y + 1] == 0)
+                    Tiles[a, Y + 1] = -1;
                 }
+                for (int b = (int)BlockCoords.x; b >= X; b--)
+                {
+                    Debug.Log("Banning while moving left");
+                    if (Y != 0 && Tiles[b, Y - 1] == 0)
+                        Tiles[b, Y - 1] = -1;
+                    if (Y != 18 && Tiles[b, Y + 1] == 0)
+                        Tiles[b, Y + 1] = -1;
+                }
+                //Ban perpindicular to Horizontal
+                //for (int j = 0; j < 19; j++)
+                //{
+                //    if(Tiles[(int)BlockCoords.x, (int)j] == 0)
+                //    Tiles[(int)BlockCoords.x, (int)j] = -1;
+                //}
             }
             else
             {
-                for (int j = 0; j < 35; j++)
+                //Vertically
+
+                for (int a = Y; a <= (int)BlockCoords.y; a++)
                 {
-                    if(Tiles[j, (int)BlockCoords.y] == 0)
-                    Tiles[j, (int)BlockCoords.y] = -1;
+                    Debug.Log("Banning while moving up");
+                    if (X != 0 && Tiles[X - 1, a] == 0)
+                        Tiles[X - 1, a] = -1;
+                    if (X != 34 && Tiles[X + 1, a] == 0)
+                        Tiles[X + 1, a] = -1;
                 }
+                for (int a = (int)BlockCoords.y; a >= Y; a--)
+                {
+                    Debug.Log("Banning while moving down");
+                    if (X != 0 && Tiles[X - 1, a] == 0)
+                        Tiles[X - 1, a] = -1;
+                    if (X != 34 && Tiles[X + 1, a] == 0)
+                        Tiles[X + 1, a] = -1;
+                }
+                //Ban perpindicular to Vertical
+                //for (int j = 0; j < 35; j++)
+                //{
+                //    if(Tiles[j, (int)BlockCoords.y] == 0)
+                //    Tiles[j, (int)BlockCoords.y] = -1;
+                //}
             }
 
+            //Place Block at destination coords
             Tiles[(int)BlockCoords.x, (int)BlockCoords.y] = 1;
 
+            //Move Path walker back one
             X = (int)BlockCoords.x - (int)Dir.x;
             Y = (int)BlockCoords.y - (int)Dir.y;
             //}
 
-            Debug.Log(Dir);
         }
 
         DrawBoard();
