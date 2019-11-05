@@ -6,15 +6,25 @@ public class SlidingMaze : MonoBehaviour {
 
     public GameObject RedTile, PurpleTile, StartTile, EndTile, PinkTile;
     public int[ , ] Tiles;
-
+	Vector2[] PathPoints;
 
 	// Use this for initialization
 	void Start ()
     {
+		PathPoints = new Vector2[7];
+		
         Tiles = new int[35, 19];
-        Invoke("MainPath", 1);
-        //MainPath();
-        //DrawBoard();
+		
+		bool Success = MainPath();
+		
+		while(Success == false)
+		{
+			Debug.Log("Failed. Retrying");
+			Success = MainPath();
+			Tiles = new int[35, 19];
+			
+		}
+        DrawBoard();
         //Tiles[_,_] = _ {0-2}
 	}
 	
@@ -53,7 +63,7 @@ public class SlidingMaze : MonoBehaviour {
         }
     }
 
-    void MainPath()
+    bool MainPath()
     {
         Vector2 Dir = Vector2.left;
         int X, Y;
@@ -80,31 +90,34 @@ public class SlidingMaze : MonoBehaviour {
         for (int i = 0; i < 7; i++)
         {
             Dir = RandDir(X, Y, Dir);
+			PathPoints[i] = new Vector2(X, Y);
+			if(Dir == Vector2.zero)
+			{
+				
+				return false;
+
+			}
             Vector2 BlockCoords = RandCoords(X, Y, Dir);
 
             Debug.Log(Dir);
             //Horizontal or Vertical
             if (Mathf.Abs(Dir.x) > .01)
             {
-                Debug.Log(BlockCoords.x);
-                Debug.Log(X);
                 //Horizontal
                 //////////////////////if statements?
                 for (int a = X; a <= (int)BlockCoords.x; a++)
                 {
-                    Debug.Log("Banning while moving right");
                     if (Y != 0 && Tiles[a, Y-1] == 0)
                     Tiles[a, Y-1] = -1;
                     if (Y != 18 && Tiles[a, Y + 1] == 0)
                     Tiles[a, Y + 1] = -1;
                 }
-                for (int b = (int)BlockCoords.x; b >= X; b--)
+                for (int a = X; a >= (int)BlockCoords.x; a--)
                 {
-                    Debug.Log("Banning while moving left");
-                    if (Y != 0 && Tiles[b, Y - 1] == 0)
-                        Tiles[b, Y - 1] = -1;
-                    if (Y != 18 && Tiles[b, Y + 1] == 0)
-                        Tiles[b, Y + 1] = -1;
+                    if (Y != 0 && Tiles[a, Y - 1] == 0)
+                        Tiles[a, Y - 1] = -1;
+                    if (Y != 18 && Tiles[a, Y + 1] == 0)
+                        Tiles[a, Y + 1] = -1;
                 }
                 //Ban perpindicular to Horizontal
                 //for (int j = 0; j < 19; j++)
@@ -119,15 +132,13 @@ public class SlidingMaze : MonoBehaviour {
 
                 for (int a = Y; a <= (int)BlockCoords.y; a++)
                 {
-                    Debug.Log("Banning while moving up");
                     if (X != 0 && Tiles[X - 1, a] == 0)
                         Tiles[X - 1, a] = -1;
                     if (X != 34 && Tiles[X + 1, a] == 0)
                         Tiles[X + 1, a] = -1;
                 }
-                for (int a = (int)BlockCoords.y; a >= Y; a--)
+                for (int a = Y; a >= (int)BlockCoords.y; a--)
                 {
-                    Debug.Log("Banning while moving down");
                     if (X != 0 && Tiles[X - 1, a] == 0)
                         Tiles[X - 1, a] = -1;
                     if (X != 34 && Tiles[X + 1, a] == 0)
@@ -151,7 +162,7 @@ public class SlidingMaze : MonoBehaviour {
 
         }
 
-        DrawBoard();
+		return true;
     }
 
     Vector2 RandDir(int X, int Y, Vector2 BanDir)
@@ -254,7 +265,8 @@ public class SlidingMaze : MonoBehaviour {
 
         if(Dirs.Count == 0)
         {
-            DrawBoard();
+			return Vector2.zero;
+            //DrawBoard();
         }
         return Dirs[i];
     }
