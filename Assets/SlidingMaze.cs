@@ -89,7 +89,7 @@ public class SlidingMaze : MonoBehaviour {
         //Main Path Loop
         for (int i = 0; i < 7; i++)
         {
-            Dir = RandDir(X, Y, Dir);
+            Dir = RandDir(X, Y, -Dir);
 			PathPoints[i] = new Vector2(X, Y);
 			if(Dir == Vector2.zero)
 			{
