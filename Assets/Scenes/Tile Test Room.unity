@@ -11141,6 +11141,7 @@ MonoBehaviour:
   StartTile: {fileID: 879945640}
   EndTile: {fileID: 425700960}
   PinkTile: {fileID: 1446203542}
+  BorderTile: {fileID: 94997271}
 --- !u!4 &423190320
 Transform:
   m_ObjectHideFlags: 0

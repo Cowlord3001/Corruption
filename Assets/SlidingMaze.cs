@@ -4,26 +4,31 @@ using UnityEngine;
 
 public class SlidingMaze : MonoBehaviour {
 
-    public GameObject RedTile, PurpleTile, StartTile, EndTile, PinkTile;
+    public GameObject RedTile, PurpleTile, StartTile, EndTile, PinkTile, BorderTile;
     public int[ , ] Tiles;
 	Vector2[] PathPoints;
 
 	// Use this for initialization
 	void Start ()
     {
-		PathPoints = new Vector2[7];
+		PathPoints = new Vector2[7]; //If changes made, this may break
 		
         Tiles = new int[35, 19];
 		
 		bool Success = MainPath();
 		
-		while(Success == false)
+		while(Success == false) // Add one for Sidepath
 		{
 			Debug.Log("Failed. Retrying");
-			Success = MainPath();
 			Tiles = new int[35, 19];
-			
-		}
+            Success = MainPath();
+        }
+
+        for (int i = 0; i < 7; i++)
+        {
+            SidePath(i);
+        }
+
         DrawBoard();
         //Tiles[_,_] = _ {0-2}
 	}
@@ -58,6 +63,14 @@ public class SlidingMaze : MonoBehaviour {
                 else if (Tiles[i, j] == -1)
                 {
                     Instantiate(PurpleTile, transform.position + new Vector3(i, j, 0), Quaternion.identity);
+                }
+                else if (Tiles[i, j] == 3)
+                {
+                    Instantiate(EndTile, transform.position + new Vector3(i, j, 0), Quaternion.identity);
+                }
+                else if (Tiles [i, j] == 10)
+                {
+                    Instantiate(BorderTile, transform.position + new Vector3(i, j, 0), Quaternion.identity);
                 }
             }
         }
@@ -153,7 +166,14 @@ public class SlidingMaze : MonoBehaviour {
             }
 
             //Place Block at destination coords
-            Tiles[(int)BlockCoords.x, (int)BlockCoords.y] = 1;
+            if(i == 6)
+            {
+                Tiles[(int)BlockCoords.x, (int)BlockCoords.y] = 3;
+            }
+            else
+            {
+                Tiles[(int)BlockCoords.x, (int)BlockCoords.y] = 1;
+            }
 
             //Move Path walker back one
             X = (int)BlockCoords.x - (int)Dir.x;
@@ -163,6 +183,92 @@ public class SlidingMaze : MonoBehaviour {
         }
 
 		return true;
+    }
+
+    bool SidePath(int PathNum)
+    {
+        Vector2 Dir = Vector2.zero; //Might be bad & broken????
+        int X, Y;
+        X = (int)PathPoints[PathNum].x;
+        Y = (int)PathPoints[PathNum].y;
+
+        //Main Path Loop
+        for (int i = 0; i < 3; i++) //Random number of blocks (Dynamic - Maximum of __, if impossible, end but don't reset)? For main path too?
+        {
+            Dir = RandDir(X, Y, -Dir);
+            //PathPoints[i] = new Vector2(X, Y);
+            if (Dir == Vector2.zero)
+            {
+
+                return false;
+
+            }
+            Vector2 BlockCoords = RandCoords(X, Y, Dir);
+
+            Debug.Log(Dir);
+            //Horizontal or Vertical   //Soft Ban for buckshot?
+            if (Mathf.Abs(Dir.x) > .01)
+            {
+                //Horizontal
+                //////////////////////if statements?
+                for (int a = X; a <= (int)BlockCoords.x; a++)
+                {
+                    if (Y != 0 && Tiles[a, Y - 1] == 0)
+                        Tiles[a, Y - 1] = -1;
+                    if (Y != 18 && Tiles[a, Y + 1] == 0)
+                        Tiles[a, Y + 1] = -1;
+                }
+                for (int a = X; a >= (int)BlockCoords.x; a--)
+                {
+                    if (Y != 0 && Tiles[a, Y - 1] == 0)
+                        Tiles[a, Y - 1] = -1;
+                    if (Y != 18 && Tiles[a, Y + 1] == 0)
+                        Tiles[a, Y + 1] = -1;
+                }
+                //Ban perpindicular to Horizontal
+                //for (int j = 0; j < 19; j++)
+                //{
+                //    if(Tiles[(int)BlockCoords.x, (int)j] == 0)
+                //    Tiles[(int)BlockCoords.x, (int)j] = -1;
+                //}
+            }
+            else
+            {
+                //Vertically
+
+                for (int a = Y; a <= (int)BlockCoords.y; a++)
+                {
+                    if (X != 0 && Tiles[X - 1, a] == 0)
+                        Tiles[X - 1, a] = -1;
+                    if (X != 34 && Tiles[X + 1, a] == 0)
+                        Tiles[X + 1, a] = -1;
+                }
+                for (int a = Y; a >= (int)BlockCoords.y; a--)
+                {
+                    if (X != 0 && Tiles[X - 1, a] == 0)
+                        Tiles[X - 1, a] = -1;
+                    if (X != 34 && Tiles[X + 1, a] == 0)
+                        Tiles[X + 1, a] = -1;
+                }
+                //Ban perpindicular to Vertical
+                //for (int j = 0; j < 35; j++)
+                //{
+                //    if(Tiles[j, (int)BlockCoords.y] == 0)
+                //    Tiles[j, (int)BlockCoords.y] = -1;
+                //}
+            }
+
+            //Place Block at destination coords
+            Tiles[(int)BlockCoords.x, (int)BlockCoords.y] = 10;
+
+            //Move Path walker back one
+            X = (int)BlockCoords.x - (int)Dir.x;
+            Y = (int)BlockCoords.y - (int)Dir.y;
+            //}
+
+        }
+
+        return true;
     }
 
     Vector2 RandDir(int X, int Y, Vector2 BanDir)
@@ -175,7 +281,7 @@ public class SlidingMaze : MonoBehaviour {
 
         for (int u = Y; u < 19; u++)
         {
-            if (Tiles[X, u] == 1)
+            if (Tiles[X, u] == 1 || Tiles[X, u] == 3)
             {
                 break;
             }
