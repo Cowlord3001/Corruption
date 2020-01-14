@@ -33,6 +33,7 @@ public class SlidingMaze : MonoBehaviour {
         //Tiles[_,_] = _ {0-2}
 	}
 	
+
 	// Update is called once per frame
 	void Update ()
     {
@@ -57,8 +58,8 @@ public class SlidingMaze : MonoBehaviour {
                 }
                 else if (Tiles[i, j] == 2)
                 {
-                    Instantiate(StartTile, transform.position + new Vector3(i, j, 0), Quaternion.identity);
-
+                    //Instantiate(StartTile, transform.position + new Vector3(i, j, 0), Quaternion.identity);
+                    StartTile.transform.position = transform.position + new Vector3(i, j, 0);
                 }
                 else if (Tiles[i, j] == -1)
                 {
@@ -281,7 +282,7 @@ public class SlidingMaze : MonoBehaviour {
 
         for (int u = Y; u < 19; u++)
         {
-            if (Tiles[X, u] == 1 || Tiles[X, u] == 3)
+            if (Tiles[X, u] == 1 || Tiles[X, u] == 3 || Tiles[X, u] == 10)
             {
                 break;
             }
@@ -303,7 +304,7 @@ public class SlidingMaze : MonoBehaviour {
 
         for (int u = Y; u > -1; u--)
         {
-            if (Tiles[X, u] == 1)
+            if (Tiles[X, u] == 1 || Tiles[X, u] == 3 || Tiles[X, u] == 10)
             {
                 break;
             }
@@ -325,7 +326,7 @@ public class SlidingMaze : MonoBehaviour {
 
         for (int u = X; u < 35; u++)
         {
-            if (Tiles[u, Y] == 1)
+            if (Tiles[u, Y] == 1 || Tiles[u, Y] == 3 || Tiles[u, Y] == 10)
             {
                 break;
             }
@@ -347,7 +348,7 @@ public class SlidingMaze : MonoBehaviour {
 
         for (int u = X; u > -1; u--)
         {
-            if (Tiles[u, Y] == 1)
+            if (Tiles[u, Y] == 1 || Tiles[u, Y] == 3 || Tiles[u, Y] == 10)
             {
                 break;
             }
@@ -396,7 +397,12 @@ public class SlidingMaze : MonoBehaviour {
             //    break;
             //}
 
-            if (Tiles[X, Y] != -1 && Tiles[X, Y] != 2)
+            if (Tiles[X, Y] == 1 || Tiles[X, Y] == 3 || Tiles[X, Y] == 10)
+            {
+                break;
+            }
+
+            if (/*Tiles[X, Y] != -1 && */Tiles[X, Y] != 2)
             {
                 if (Dir.x == 0)
                 {
