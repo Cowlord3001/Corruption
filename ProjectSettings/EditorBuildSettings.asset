@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tile Maze Tutorial.unity
     guid: 3a66a62fd4a33d64684787188ee06d93
+  - enabled: 1
+    path: Assets/Scenes/Tile Maze Stage 1.unity
+    guid: 078f2fe38329b2a43b5779d1c3cc955a
   m_configObjects: {}
