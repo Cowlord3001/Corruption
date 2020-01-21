@@ -30,12 +30,13 @@ public class SlidingMaze : MonoBehaviour {
         }
 
         DrawBoard();
+        Debug.Log(Score(0, 0));
         //Tiles[_,_] = _ {0-2}
 	}
 	
 
 	// Update is called once per frame
-	void Update ()
+	void FixedUpdate ()
     {
 		
 	}
@@ -439,5 +440,22 @@ public class SlidingMaze : MonoBehaviour {
             }
         }
         return EndCoords;
+    }
+
+    int Score (int x, int y)
+    {
+        int score = 0;
+
+        for (int i = 0; i < 5; i++) //y
+        {
+            for (int j = 0; j < 5; j++) //x
+            {
+                if(x-2+j > 0 && x-2+j < 35 && y-2+i > 0 && y-2+i < 19 && Tiles[x-2+j, y-2+i] == 0)
+                {
+                    score += 1;
+                }
+            }
+        }
+        return score;
     }
 }

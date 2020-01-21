@@ -6,7 +6,7 @@ public class Boss1Tech : MonoBehaviour {
     
     public GameObject[] BossTiles;
     public float TileLength;
-    int BossHealth = 2;
+    static int BossHealth;
     GameObject ATile;
     public GameObject EndPortal;
 
@@ -17,6 +17,15 @@ public class Boss1Tech : MonoBehaviour {
     void Start ()
     {
         SpawnTiles();
+        if (BossHealth == 2 || BossHealth == 1)
+        {
+
+        }
+        else
+        {
+            BossHealth = 2;
+        }
+        //Debug.Log(BossHealth);
 	}
 	
 	// Update is called once per frame

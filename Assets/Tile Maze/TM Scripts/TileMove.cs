@@ -37,7 +37,7 @@ public class TileMove : MonoBehaviour {
 
 
 	// Update is called once per frame
-	void Update ()
+	void FixedUpdate ()
     {
         if(Moving == false && CanMove == true)
         {

@@ -1867,7 +1867,7 @@ MonoBehaviour:
   Jump: {fileID: 1729324520}
   Death: {fileID: 1729324519}
   End: {fileID: 1729324518}
-  Playtesting_Mode: 0
+  Playtesting_Mode: 1
 --- !u!4 &423254865 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4882960779869016, guid: 6f73babc43d5e3640a95cf995c22be78,
