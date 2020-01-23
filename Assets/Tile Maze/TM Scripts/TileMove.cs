@@ -18,19 +18,23 @@ public class TileMove : MonoBehaviour {
     public GameObject OldStart;
     public float CamSpeed;
     float CamDir;
+    float SizeDir;
 
     Vector2 LastMove;
     GameObject PrevTile;
+    List <GameObject> ButtonsPressed;
 
     public int Weight;
 
     public AudioSource Move;
     public AudioSource Finish;
     public AudioSource Yellow;
+    public AudioSource Button;
 
     // Use this for initialization
     void Start ()
     {
+        ButtonsPressed = new List<GameObject>();
         CanMove = true;
 	}
 	
@@ -205,6 +209,11 @@ public class TileMove : MonoBehaviour {
 
             if(CurrentTile.tag == "Button")
             {
+                if(CurrentTile.GetComponent<ButtonTile>().ButtonDown == false || CurrentTile.GetComponent<ButtonTile>().Reversable == true)
+                {
+                    Button.Play();
+                }
+                ButtonsPressed.Add(CurrentTile);
                 CurrentTile.SendMessage("Change");
                 //Multiple Scripts can Run -- Change Multiple Things
             }
@@ -252,6 +261,12 @@ public class TileMove : MonoBehaviour {
         CanMove = true;
         Weight = 0;
         gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1);
+
+        for (int i = 0; i < ButtonsPressed.Count; i++)
+        {
+            ButtonsPressed[i].SendMessage("Reload");
+        }
+
     }
 
     void NextStage()
@@ -266,6 +281,7 @@ public class TileMove : MonoBehaviour {
             gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1);
 
             CamDir = End.CamX - Camera.main.transform.position.x;
+            SizeDir = End.CamSize - Camera.main.orthographicSize;
 
             InvokeRepeating("CameraUpdate", 0, .008f);
         }
@@ -281,10 +297,11 @@ public class TileMove : MonoBehaviour {
 
         float sizedif = Mathf.Abs (End.CamSize - Camera.main.orthographicSize);
         float posdif = Mathf.Abs (End.CamX - Camera.main.transform.position.x);
+        
 
         if (sizedif > .1)
         {
-            Camera.main.orthographicSize += Time.deltaTime * (CamSpeed/2 * CamDir/Mathf.Abs(CamDir));
+            Camera.main.orthographicSize += Time.deltaTime * (CamSpeed/2 * SizeDir / Mathf.Abs(SizeDir));
         }
 
         if (posdif > .1)

@@ -114,7 +114,7 @@ public class SlidingMaze : MonoBehaviour {
 			}
             Vector2 BlockCoords = RandCoords(X, Y, Dir);
 
-            Debug.Log(Dir);
+            //Debug.Log(Dir);
             //Horizontal or Vertical
             if (Mathf.Abs(Dir.x) > .01)
             {
@@ -207,7 +207,7 @@ public class SlidingMaze : MonoBehaviour {
             }
             Vector2 BlockCoords = RandCoords(X, Y, Dir);
 
-            Debug.Log(Dir);
+            //Debug.Log(Dir);
             //Horizontal or Vertical   //Soft Ban for buckshot?
             if (Mathf.Abs(Dir.x) > .01)
             {
@@ -450,8 +450,10 @@ public class SlidingMaze : MonoBehaviour {
         {
             for (int j = 0; j < 5; j++) //x
             {
-                if(x-2+j > 0 && x-2+j < 35 && y-2+i > 0 && y-2+i < 19 && Tiles[x-2+j, y-2+i] == 0)
+                //Debug.Log((x-2+j) + ", " + (y-2+i));
+                if(x-2+j >= 0 && x-2+j <= 35 && y-2+i >= 0 && y-2+i <= 19 && Tiles[x-2+j, y-2+i] == 0)
                 {
+                    //Debug.Log(Tiles[x - 2 + j, y - 2 + i]);
                     score += 1;
                 }
             }

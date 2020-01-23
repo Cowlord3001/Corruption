@@ -11,7 +11,7 @@ public class ButtonTile : MonoBehaviour {
     public GameObject[] Tile;
     public GameObject Type;
 
-    bool ButtonDown;
+    public bool ButtonDown;
 
 
 	// Use this for initialization
@@ -60,5 +60,15 @@ public class ButtonTile : MonoBehaviour {
                 ButtonDown = false;
             }
         }
+    }
+
+    public void Reload()
+    {
+        for (int i = 0; i < Tile.Length; i++)
+        {
+            Tile[i].tag = TagMem[i];
+            Tile[i].GetComponent<SpriteRenderer>().color = ColorMem[i];
+        }
+        ButtonDown = false;
     }
 }
