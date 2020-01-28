@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class SlidingMaze : MonoBehaviour {
 
-    public GameObject RedTile, PurpleTile, StartTile, EndTile, PinkTile, BorderTile;
+    public GameObject RedTile, PurpleTile, StartTile, EndTile, PinkTile, BorderTile, BlueTile;
     public int[ , ] Tiles;
 	Vector2[] PathPoints;
 
-	// Use this for initialization
-	void Start ()
+    List<Vector3> ScoreQueue;
+
+    // Use this for initialization
+    void Start ()
     {
 		PathPoints = new Vector2[7]; //If changes made, this may break
 		
         Tiles = new int[35, 19];
+
+        ScoreQueue = new List<Vector3>();
 		
 		bool Success = MainPath();
 		
@@ -29,10 +33,20 @@ public class SlidingMaze : MonoBehaviour {
             SidePath(i);
         }
 
+        Scatter();
+        
+
+        for (int i = 0; i < ScoreQueue.Count; i++)
+        {
+            Debug.Log(ScoreQueue[i]);
+        }
+        
+
         DrawBoard();
-        Debug.Log(Score(0, 0));
+
+        //Debug.Log(Score(0, 0));
         //Tiles[_,_] = _ {0-2}
-	}
+    }
 	
 
 	// Update is called once per frame
@@ -73,6 +87,10 @@ public class SlidingMaze : MonoBehaviour {
                 else if (Tiles [i, j] == 10)
                 {
                     Instantiate(BorderTile, transform.position + new Vector3(i, j, 0), Quaternion.identity);
+                }
+                else if (Tiles [i, j] == 20)
+                {
+                    Instantiate(BlueTile, transform.position + new Vector3(i, j, 0), Quaternion.identity);
                 }
             }
         }
@@ -273,6 +291,55 @@ public class SlidingMaze : MonoBehaviour {
         return true;
     }
 
+    bool Scatter()
+    {
+
+        do
+        {
+            ScoreQueue.Clear();
+            for (int i = 0; i < 35; i++)
+            {
+                for (int j = 0; j < 19; j++)
+                {
+                    if (Tiles[i, j] == 0)
+                    {
+
+                        AddList(i, j);
+
+                    }
+                }
+            }
+
+            int temp = 10;
+            
+            if(ScoreQueue.Count < 10)
+            {
+                temp = ScoreQueue.Count;
+            }
+
+            int RandQueueIndex = Random.Range(0, temp);
+
+            int x = (int)ScoreQueue[RandQueueIndex].x;
+            int y = (int)ScoreQueue[RandQueueIndex].y;
+
+            for (int i = 0; i < 5; i++) //y
+            {
+                for (int j = 0; j < 5; j++) //x
+                {
+                    //Debug.Log((x-2+j) + ", " + (y-2+i));
+                    if (x - 2 + j >= 0 && x - 2 + j < 35 && y - 2 + i >= 0 && y - 2 + i < 19 && Tiles[x - 2 + j, y - 2 + i] == 0)
+                    {
+                        Tiles[x - 2 + j, y - 2 + i] = 20;
+                    }
+                }
+            }
+            Tiles[x, y] = 1;
+
+                    } while (ScoreQueue.Count > 0); //Maybe not?
+
+        return true;
+    }
+
     Vector2 RandDir(int X, int Y, Vector2 BanDir)
     {
 
@@ -451,7 +518,7 @@ public class SlidingMaze : MonoBehaviour {
             for (int j = 0; j < 5; j++) //x
             {
                 //Debug.Log((x-2+j) + ", " + (y-2+i));
-                if(x-2+j >= 0 && x-2+j <= 35 && y-2+i >= 0 && y-2+i <= 19 && Tiles[x-2+j, y-2+i] == 0)
+                if(x-2+j >= 0 && x-2+j < 35 && y-2+i >= 0 && y-2+i < 19 && Tiles[x-2+j, y-2+i] == 0)
                 {
                     //Debug.Log(Tiles[x - 2 + j, y - 2 + i]);
                     score += 1;
@@ -460,4 +527,33 @@ public class SlidingMaze : MonoBehaviour {
         }
         return score;
     }
+
+    void AddList(int x, int y)
+    {
+        if(Tiles[x,y] == 0)
+        {
+            if (ScoreQueue.Count == 0)
+            {
+                ScoreQueue.Add(new Vector3(x, y, Score(x, y)));
+            }
+            else
+            {
+                for (int i = 0; i < ScoreQueue.Count; i++)
+                {
+                    int z = Score(x, y);
+                    if(z >= ScoreQueue[i].z)
+                    {
+                        ScoreQueue.Insert(i, new Vector3(x, y, z));
+                        break;
+                    }
+                    else if(i == ScoreQueue.Count - 1)
+                    {
+                        ScoreQueue.Add(new Vector3(x, y, z));
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    
 }
