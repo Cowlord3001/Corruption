@@ -17,6 +17,7 @@ public class HopperControls : MonoBehaviour {
 
     bool Dead = false;
 
+    bool ShieldOn = true;
     public bool Playtesting_Mode;
 
 	// Use this for initialization
@@ -69,7 +70,7 @@ public class HopperControls : MonoBehaviour {
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
-        if (collision.gameObject.tag == "Spike" && Playtesting_Mode == false)
+        if (collision.gameObject.tag == "Spike" && Playtesting_Mode == false && ShieldOn == false)
         {
             if(Dead != true)
             {
@@ -81,6 +82,11 @@ public class HopperControls : MonoBehaviour {
             CanJump = false;
             JumpCool = true;
             Invoke("reload", 1);
+        }
+
+        else if (collision.gameObject.tag == "Spike" && Playtesting_Mode == false && ShieldOn == true)
+        {
+            Invoke("ShieldBreak", 1);
         }
 
         else if (collision.gameObject.tag == "Spike" && Playtesting_Mode == true)
@@ -109,6 +115,15 @@ public class HopperControls : MonoBehaviour {
             collision.gameObject.GetComponent<PolygonCollider2D>().isTrigger = true;
         }
 
+    }
+
+    void ShieldBreak()
+    {
+        ShieldOn = false;
+        if (transform.childCount != 1)
+        {
+            Destroy(transform.GetChild(1).gameObject);
+        }
     }
 
     void reload()

@@ -27,7 +27,7 @@ public class Boss1Attack : MonoBehaviour {
     {
         if (SpreadAttack == true)
         {
-            InvokeRepeating("Spread", 0, SRoF);
+            InvokeRepeating("Spread", 1, SRoF);
         }
 
         else if (TargetAttack == true)
