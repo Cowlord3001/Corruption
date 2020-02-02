@@ -17,7 +17,7 @@ public class HopperControls : MonoBehaviour {
 
     bool Dead = false;
 
-    bool ShieldOn = true;
+    bool ShieldOn;
     public bool Playtesting_Mode;
 
 	// Use this for initialization
@@ -34,6 +34,15 @@ public class HopperControls : MonoBehaviour {
         else
         {
             JumpCool = false;
+        }
+
+        if (SceneManager.GetActiveScene().buildIndex == 5)
+        {
+            ShieldOn = true;
+        }
+        else
+        {
+            ShieldOn = false;
         }
 
     }
