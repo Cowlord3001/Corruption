@@ -14,6 +14,7 @@ public class HopperControls : MonoBehaviour {
     public AudioSource Jump;
     public AudioSource Death;
     public AudioSource End;
+    public AudioSource ShieldShatter;
 
     bool Dead = false;
 
@@ -74,6 +75,9 @@ public class HopperControls : MonoBehaviour {
         }
 
         Mybody.velocity = new Vector3(speed, Mybody.velocity.y, 0);
+
+        GameData.LevelTime += Time.deltaTime;
+        GameData.TotalTime += Time.deltaTime;
 	}
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -131,6 +135,7 @@ public class HopperControls : MonoBehaviour {
         ShieldOn = false;
         if (transform.childCount != 1)
         {
+            ShieldShatter.Play();
             Destroy(transform.GetChild(1).gameObject);
         }
     }
@@ -138,11 +143,15 @@ public class HopperControls : MonoBehaviour {
     void reload()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        GameData.TotalDeaths++;
+        GameData.LevelDeaths++;
     }
 
     void NextStage()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        GameData.LevelDeaths = 0;
+        GameData.LevelTime = 0;
         if(SceneManager.GetActiveScene().buildIndex != 1)
         {
             Persist.Song = false;
