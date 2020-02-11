@@ -1,27 +1,34 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class BlockKill : MonoBehaviour {
 
     public HopperControls Player;
 
+    bool Dead = false;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Player")
+        if(collision.gameObject.tag == "Player" && Player != null)
         {
-                Player.speed = 0;
-                HopperControls.CanJump = false;
-                HopperControls.JumpCool = true;
-                Invoke("reload", 1);
-            
+            if(Dead != true)
+            {
+                Player.SendMessage("BlockKillSFX");
+                Debug.Log("ded");
+            }
+            Dead = true;
+            Player.speed = 0;
+            HopperControls.CanJump = false;
+            HopperControls.JumpCool = true;
+            Player.GetComponent<SpriteRenderer>().color = new Color(100 / 255, 0, 0);
+            Invoke("reload", 1);
         }
     }
 
     void reload()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Player.SendMessage("reload");
     }
 
 }

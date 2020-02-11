@@ -130,6 +130,11 @@ public class HopperControls : MonoBehaviour {
 
     }
 
+    void BlockKillSFX()
+    {
+        Death.Play();
+    }
+
     void ShieldBreak()
     {
         ShieldOn = false;
