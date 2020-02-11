@@ -6,18 +6,17 @@ public class BlockKill : MonoBehaviour {
 
     public HopperControls Player;
 
-    bool Dead = false;
+    static bool dead = false;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Player" && Player != null)
         {
-            if(Dead != true)
+            if(dead != true)
             {
                 Player.SendMessage("BlockKillSFX");
-                Debug.Log("ded");
             }
-            Dead = true;
+            dead = true;
             Player.speed = 0;
             HopperControls.CanJump = false;
             HopperControls.JumpCool = true;
