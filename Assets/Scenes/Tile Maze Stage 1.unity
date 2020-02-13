@@ -23054,6 +23054,7 @@ MonoBehaviour:
   Tile:
   - {fileID: 537463781}
   Type: {fileID: 1446203542}
+  ButtonDown: 0
 --- !u!61 &1416182275
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -23115,7 +23116,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 64eead6dd5a68e0408dce431fd0a81d3, type: 3}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -31002,6 +31003,7 @@ MonoBehaviour:
   Reversable: 0
   Tile: []
   Type: {fileID: 0}
+  ButtonDown: 0
 --- !u!61 &1922532665
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -31063,7 +31065,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 64eead6dd5a68e0408dce431fd0a81d3, type: 3}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

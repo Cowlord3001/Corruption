@@ -52,14 +52,14 @@ public class HopperControls : MonoBehaviour {
 	void Update ()
     {
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && CanJump == true && JumpCool == true && Dead == false)
+        if ((Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Space)) && CanJump == true && JumpCool == true && Dead == false)
         {
             Jump.Play();
             Mybody.velocity = Vector3.up * jumpheight;
             CanJump = false;
         }
         //New Stuff: Allows unlimited jump if in Stage 3
-        else if (Input.GetKeyDown(KeyCode.Mouse0) && JumpCool == false && Dead == false)
+        else if ((Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Space)) && JumpCool == false && Dead == false)
         {
             Jump.Play();
             Mybody.velocity = Vector3.up * jumpheight;
