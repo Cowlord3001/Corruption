@@ -11845,7 +11845,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 718740466}
-  m_Text: I in trust your ability to figure out how being Light works all by yourself.
+  m_Text: I trust in your ability to figure out how being Light works all by yourself.
   m_OffsetZ: 0
   m_CharacterSize: 0.4
   m_LineSpacing: 1
