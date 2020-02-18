@@ -21,13 +21,13 @@ public class DataUpdate : MonoBehaviour {
 	void Start ()
     {
         float FinalDeaths = (110 - GameData.TotalDeaths);
-        float FinalTime = (221 - (GameData.TotalTime / 110));
+        float FinalTime = Mathf.Floor(221 - (GameData.TotalTime / 110));
         float FinalSkips = (5 - GameData.Skips);
 
         if (SceneManager.GetActiveScene().buildIndex == 6)
         {
             ToDeaths.text = "Total Deaths: " + GameData.TotalDeaths + " = " + (110 - GameData.TotalDeaths) + " / 110";
-            ToTime.text = "Total Time: " + Mathf.Floor(GameData.TotalTime / 60) + ":" + Mathf.Floor(GameData.TotalTime - Mathf.Floor(GameData.TotalTime / 60) * 60) + " = " + (221 - (GameData.TotalTime / 110)) + " / 220";
+            ToTime.text = "Total Time: " + Mathf.Floor(GameData.TotalTime / 60) + ":" + Mathf.Floor(GameData.TotalTime - Mathf.Floor(GameData.TotalTime / 60) * 60) + " = " + (Mathf.Floor(221 - (GameData.TotalTime / 110))) + " / 220";
             ToSkips.text = "Total Skips: " + GameData.Skips + " = " + (5 - GameData.Skips) + " / 5";
             ToScore.text = "Final Score: " + (FinalTime + FinalDeaths + FinalSkips) + " / 335";
         }
