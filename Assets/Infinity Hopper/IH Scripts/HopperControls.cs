@@ -46,6 +46,8 @@ public class HopperControls : MonoBehaviour {
             ShieldOn = false;
         }
 
+        Boss1Attack.GreenHit = false;
+
     }
 	
 	// Update is called once per frame
@@ -63,6 +65,12 @@ public class HopperControls : MonoBehaviour {
         {
             Jump.Play();
             Mybody.velocity = Vector3.up * jumpheight;
+        }
+        else if (Input.GetKeyDown(KeyCode.R))
+        {
+            Death.Play();
+            GetComponent<SpriteRenderer>().color = new Color(100 / 255, 0, 0);
+            reload();
         }
 
         if(Mybody.velocity.y < 0)
