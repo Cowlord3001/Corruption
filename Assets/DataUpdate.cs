@@ -16,19 +16,20 @@ public class DataUpdate : MonoBehaviour {
     public GameObject Skip;
     public GameObject SkipFinal;
     public int SkipAmount;
+    public int SkipTime;
 
 	// Use this for initialization
 	void Start ()
     {
         float FinalDeaths = (110 - GameData.TotalDeaths);
-        float FinalTime = Mathf.Floor(221 - (GameData.TotalTime / 110));
-        float FinalSkips = (5 - GameData.Skips);
+        float FinalTime = Mathf.Floor(271 - (GameData.TotalTime / 220) * 50); 
+        float FinalSkips = (5 - GameData.Skips) * 5;
 
         if (SceneManager.GetActiveScene().buildIndex == 6)
         {
             ToDeaths.text = "Total Deaths: " + GameData.TotalDeaths + " = " + (110 - GameData.TotalDeaths) + " / 110";
-            ToTime.text = "Total Time: " + Mathf.Floor(GameData.TotalTime / 60) + ":" + Mathf.Floor(GameData.TotalTime - Mathf.Floor(GameData.TotalTime / 60) * 60) + " = " + (Mathf.Floor(221 - (GameData.TotalTime / 110))) + " / 220";
-            ToSkips.text = "Total Skips: " + GameData.Skips + " = " + (5 - GameData.Skips) + " / 5";
+            ToTime.text = "Total Time: " + Mathf.Floor(GameData.TotalTime / 60) + ":" + Mathf.Floor(GameData.TotalTime - Mathf.Floor(GameData.TotalTime / 60) * 60) + " = " + (Mathf.Floor(271 - ((GameData.TotalTime / 220) * 50))) + " / 220";
+            ToSkips.text = "Total Skips: " + GameData.Skips + " = " + (25 - GameData.Skips) + " / 25";
             ToScore.text = "Final Score: " + (FinalTime + FinalDeaths + FinalSkips) + " / 335";
         }
         else
@@ -48,7 +49,7 @@ public class DataUpdate : MonoBehaviour {
         {
             Deaths.text = "Deaths: " + GameData.LevelDeaths;
             tTime.text = "Time: " + Mathf.Floor(GameData.LevelTime / 60) + ":" + Mathf.Floor(GameData.LevelTime - Mathf.Floor(GameData.LevelTime / 60) * 60);
-            if (GameData.LevelDeaths >= SkipAmount && Skip.activeInHierarchy == false)
+            if (GameData.LevelDeaths >= SkipAmount && GameData.LevelTime >= SkipTime && Skip.activeInHierarchy == false)
             {
                 Skip.SetActive(true);
             }

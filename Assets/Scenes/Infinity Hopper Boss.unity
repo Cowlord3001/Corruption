@@ -9493,6 +9493,11 @@ Prefab:
       propertyPath: SkipAmount
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 114564933282146936, guid: 659078f6ed917314290d634465a8c630,
+        type: 2}
+      propertyPath: SkipTime
+      value: 150
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 659078f6ed917314290d634465a8c630, type: 2}
   m_IsPrefabParent: 0
