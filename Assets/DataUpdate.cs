@@ -21,16 +21,38 @@ public class DataUpdate : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        float FinalDeaths = (110 - GameData.TotalDeaths);
-        float FinalTime = Mathf.Floor(271 - (GameData.TotalTime / 220) * 50); 
-        float FinalSkips = (5 - GameData.Skips) * 5;
+        GameData.TotalDeaths = 0;
+        GameData.TotalTime = 220;
+        GameData.Skips = 0;
+
+        float FinalDeaths = 0;
+        if(GameData.TotalDeaths >= 315)
+        {
+            FinalDeaths = 0;
+        }
+        else
+        {
+            FinalDeaths = (105 - Mathf.Floor(GameData.TotalDeaths / 3));
+        }
+
+        float FinalTime = 0;
+        if (GameData.TotalTime < 1800)
+        {
+            FinalTime = Mathf.Floor(800 - (GameData.TotalTime / 4));
+        }
+        else
+        {
+            FinalTime = Mathf.Floor(2117.376f * Mathf.Exp(-.001f * GameData.TotalTime));
+        } 
+
+        float FinalSkips = (5 - GameData.Skips) * 150;
 
         if (SceneManager.GetActiveScene().buildIndex == 6)
         {
-            ToDeaths.text = "Total Deaths: " + GameData.TotalDeaths + " = " + (110 - GameData.TotalDeaths) + " / 110";
-            ToTime.text = "Total Time: " + Mathf.Floor(GameData.TotalTime / 60) + ":" + Mathf.Floor(GameData.TotalTime - Mathf.Floor(GameData.TotalTime / 60) * 60) + " = " + (Mathf.Floor(271 - ((GameData.TotalTime / 220) * 50))) + " / 220";
-            ToSkips.text = "Total Skips: " + GameData.Skips + " = " + (25 - GameData.Skips) + " / 25";
-            ToScore.text = "Final Score: " + (FinalTime + FinalDeaths + FinalSkips) + " / 335";
+            ToDeaths.text = "Total Deaths: " + GameData.TotalDeaths + " = " + FinalDeaths + " / 105"; //WIP
+            ToTime.text = "Total Time: " + Mathf.Floor(GameData.TotalTime / 60) + ":" + Mathf.Floor(GameData.TotalTime - Mathf.Floor(GameData.TotalTime / 60) * 60) + " = " + FinalTime + " / 745";
+            ToSkips.text = "Total Skips: " + GameData.Skips + " = " + FinalSkips + " / 750"; //WIP
+            ToScore.text = "Final Score: " + (FinalTime + FinalDeaths + FinalSkips) + " / 1600";
         }
         else
         {
