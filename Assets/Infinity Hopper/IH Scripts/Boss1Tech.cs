@@ -43,6 +43,14 @@ public class Boss1Tech : MonoBehaviour {
     {
         if(collision.gameObject.tag == "Reflected")
         {
+
+            GameObject[] Projectiles = GameObject.FindGameObjectsWithTag("Spike");
+
+            for (int i = 0; i < Projectiles.Length; i++)
+            {
+                Destroy(Projectiles[i]);
+            }
+
             if (BossHealth == 1)
             {
                 Destroy(collision.gameObject);

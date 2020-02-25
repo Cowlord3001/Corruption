@@ -610,12 +610,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpreadAttack: 1
-  SpreadProjectile: {fileID: 1018423463}
+  SpreadProjectile: {fileID: 1474397763339798, guid: 7277d0c94b4678a42b0ab98c7f36a12a,
+    type: 2}
   SpreadSpeed: 3
   SpreadAngle: 25
   SRoF: 2.5
   TargetAttack: 0
-  TargetProjectile: {fileID: 1018423463}
+  TargetProjectile: {fileID: 1474397763339798, guid: 7277d0c94b4678a42b0ab98c7f36a12a,
+    type: 2}
   TargetSpeed: 15
   TRoF: 2.5
   GreenAttack: 0
@@ -1837,12 +1839,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpreadAttack: 0
-  SpreadProjectile: {fileID: 1018423463}
+  SpreadProjectile: {fileID: 1474397763339798, guid: 7277d0c94b4678a42b0ab98c7f36a12a,
+    type: 2}
   SpreadSpeed: 3
   SpreadAngle: 25
   SRoF: 2.5
   TargetAttack: 1
-  TargetProjectile: {fileID: 1018423463}
+  TargetProjectile: {fileID: 1474397763339798, guid: 7277d0c94b4678a42b0ab98c7f36a12a,
+    type: 2}
   TargetSpeed: 15
   TRoF: 2.5
   GreenAttack: 0
@@ -2495,12 +2499,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpreadAttack: 0
-  SpreadProjectile: {fileID: 1018423463}
+  SpreadProjectile: {fileID: 1474397763339798, guid: 7277d0c94b4678a42b0ab98c7f36a12a,
+    type: 2}
   SpreadSpeed: 3
   SpreadAngle: 25
   SRoF: 2.5
   TargetAttack: 0
-  TargetProjectile: {fileID: 1018423463}
+  TargetProjectile: {fileID: 1474397763339798, guid: 7277d0c94b4678a42b0ab98c7f36a12a,
+    type: 2}
   TargetSpeed: 15
   TRoF: 2.5
   GreenAttack: 1
@@ -4370,36 +4376,11 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
---- !u!1 &1018423463 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1640776580707462, guid: 6f73babc43d5e3640a95cf995c22be78,
-    type: 2}
-  m_PrefabInternal: {fileID: 2032920730}
 --- !u!4 &1018423464 stripped
 Transform:
-  m_PrefabParentObject: {fileID: 4882960779869016, guid: 6f73babc43d5e3640a95cf995c22be78,
+  m_PrefabParentObject: {fileID: 4777275499015868, guid: 7277d0c94b4678a42b0ab98c7f36a12a,
     type: 2}
   m_PrefabInternal: {fileID: 2032920730}
---- !u!50 &1018423465
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1018423463}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 0.5
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1 &1065666236
 GameObject:
   m_ObjectHideFlags: 0
@@ -4663,12 +4644,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpreadAttack: 0
-  SpreadProjectile: {fileID: 1018423463}
+  SpreadProjectile: {fileID: 1474397763339798, guid: 7277d0c94b4678a42b0ab98c7f36a12a,
+    type: 2}
   SpreadSpeed: 3
   SpreadAngle: 25
   SRoF: 2.5
   TargetAttack: 1
-  TargetProjectile: {fileID: 1018423463}
+  TargetProjectile: {fileID: 1474397763339798, guid: 7277d0c94b4678a42b0ab98c7f36a12a,
+    type: 2}
   TargetSpeed: 15
   TRoF: 2.5
   GreenAttack: 0
@@ -9067,48 +9050,40 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 911956985}
     m_Modifications:
-    - target: {fileID: 4882960779869016, guid: 6f73babc43d5e3640a95cf995c22be78, type: 2}
+    - target: {fileID: 4777275499015868, guid: 7277d0c94b4678a42b0ab98c7f36a12a, type: 2}
       propertyPath: m_LocalPosition.x
       value: 16.4
       objectReference: {fileID: 0}
-    - target: {fileID: 4882960779869016, guid: 6f73babc43d5e3640a95cf995c22be78, type: 2}
+    - target: {fileID: 4777275499015868, guid: 7277d0c94b4678a42b0ab98c7f36a12a, type: 2}
       propertyPath: m_LocalPosition.y
       value: 7.8
       objectReference: {fileID: 0}
-    - target: {fileID: 4882960779869016, guid: 6f73babc43d5e3640a95cf995c22be78, type: 2}
+    - target: {fileID: 4777275499015868, guid: 7277d0c94b4678a42b0ab98c7f36a12a, type: 2}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4882960779869016, guid: 6f73babc43d5e3640a95cf995c22be78, type: 2}
+    - target: {fileID: 4777275499015868, guid: 7277d0c94b4678a42b0ab98c7f36a12a, type: 2}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4882960779869016, guid: 6f73babc43d5e3640a95cf995c22be78, type: 2}
+    - target: {fileID: 4777275499015868, guid: 7277d0c94b4678a42b0ab98c7f36a12a, type: 2}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4882960779869016, guid: 6f73babc43d5e3640a95cf995c22be78, type: 2}
+    - target: {fileID: 4777275499015868, guid: 7277d0c94b4678a42b0ab98c7f36a12a, type: 2}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4882960779869016, guid: 6f73babc43d5e3640a95cf995c22be78, type: 2}
+    - target: {fileID: 4777275499015868, guid: 7277d0c94b4678a42b0ab98c7f36a12a, type: 2}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4882960779869016, guid: 6f73babc43d5e3640a95cf995c22be78, type: 2}
+    - target: {fileID: 4777275499015868, guid: 7277d0c94b4678a42b0ab98c7f36a12a, type: 2}
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 1640776580707462, guid: 6f73babc43d5e3640a95cf995c22be78, type: 2}
-      propertyPath: m_Name
-      value: RigidSpike
-      objectReference: {fileID: 0}
-    - target: {fileID: 4882960779869016, guid: 6f73babc43d5e3640a95cf995c22be78, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 6f73babc43d5e3640a95cf995c22be78, type: 2}
+  m_ParentPrefab: {fileID: 100100000, guid: 7277d0c94b4678a42b0ab98c7f36a12a, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &2036934565
 GameObject:
@@ -9299,12 +9274,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpreadAttack: 1
-  SpreadProjectile: {fileID: 1018423463}
+  SpreadProjectile: {fileID: 1474397763339798, guid: 7277d0c94b4678a42b0ab98c7f36a12a,
+    type: 2}
   SpreadSpeed: 3
   SpreadAngle: 25
   SRoF: 2.5
   TargetAttack: 0
-  TargetProjectile: {fileID: 1018423463}
+  TargetProjectile: {fileID: 1474397763339798, guid: 7277d0c94b4678a42b0ab98c7f36a12a,
+    type: 2}
   TargetSpeed: 15
   TRoF: 2.5
   GreenAttack: 0
@@ -9497,6 +9474,10 @@ Prefab:
         type: 2}
       propertyPath: SkipTime
       value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 1575524649249624, guid: 659078f6ed917314290d634465a8c630, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 659078f6ed917314290d634465a8c630, type: 2}

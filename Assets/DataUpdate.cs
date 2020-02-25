@@ -21,9 +21,9 @@ public class DataUpdate : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        GameData.TotalDeaths = 0;
-        GameData.TotalTime = 220;
-        GameData.Skips = 0;
+        //GameData.TotalDeaths = 0;
+        //GameData.TotalTime = 220;
+        //GameData.Skips = 0;
 
         float FinalDeaths = 0;
         if(GameData.TotalDeaths >= 315)
@@ -49,9 +49,9 @@ public class DataUpdate : MonoBehaviour {
 
         if (SceneManager.GetActiveScene().buildIndex == 6)
         {
-            ToDeaths.text = "Total Deaths: " + GameData.TotalDeaths + " = " + FinalDeaths + " / 105"; //WIP
+            ToDeaths.text = "Total Deaths: " + GameData.TotalDeaths + " = " + FinalDeaths + " / 105"; 
             ToTime.text = "Total Time: " + Mathf.Floor(GameData.TotalTime / 60) + ":" + Mathf.Floor(GameData.TotalTime - Mathf.Floor(GameData.TotalTime / 60) * 60) + " = " + FinalTime + " / 745";
-            ToSkips.text = "Total Skips: " + GameData.Skips + " = " + FinalSkips + " / 750"; //WIP
+            ToSkips.text = "Total Skips: " + GameData.Skips + " = " + FinalSkips + " / 750"; 
             ToScore.text = "Final Score: " + (FinalTime + FinalDeaths + FinalSkips) + " / 1600";
         }
         else

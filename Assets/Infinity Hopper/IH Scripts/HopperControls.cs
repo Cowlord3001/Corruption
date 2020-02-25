@@ -132,7 +132,7 @@ public class HopperControls : MonoBehaviour {
         {
             End.Play();
             Boss1Attack.GreenHit = true;
-            collision.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(-23, 0);
+            collision.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(-35, 0);
             collision.gameObject.GetComponent<PolygonCollider2D>().isTrigger = true;
         }
 
