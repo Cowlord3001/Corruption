@@ -38,9 +38,15 @@ public class AttackTrigger : MonoBehaviour {
         {
             for (int i = 0; i < 4; i++)
             {
-                Attacks[i].SetActive(false);
+                if (Attacks[i] != null)
+                {
+                    Attacks[i].SetActive(false);
+                }
             }
-            GreenAttackNode.SetActive(false);
+            if (GreenAttackNode != null)
+            {
+                GreenAttackNode.SetActive(false);
+            }
         }
     }
 

@@ -289,6 +289,12 @@ public class TileMove : MonoBehaviour {
         else
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
+            if (SceneManager.GetActiveScene().buildIndex != 9) //Add #s for more levels w/ same song
+            {
+                Persist.Song = false;
+                Destroy(GameObject.Find("Music"));
+            }
         }
     }
 

@@ -8,6 +8,11 @@ public class BlockKill : MonoBehaviour {
 
     static bool dead = false;
 
+    private void Start()
+    {
+        dead = false;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Player" && Player != null)
