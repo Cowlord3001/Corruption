@@ -23,7 +23,7 @@ public class SlidingMaze : MonoBehaviour {
 		
 		while(Success == false) // Add one for Sidepath
 		{
-			Debug.Log("Failed. Retrying");
+			//Debug.Log("Failed. Retrying");
 			Tiles = new int[35, 19];
             Success = MainPath();
         }
@@ -34,13 +34,14 @@ public class SlidingMaze : MonoBehaviour {
         }
 
         Scatter();
-        
 
-        for (int i = 0; i < ScoreQueue.Count; i++)
-        {
-            Debug.Log(ScoreQueue[i]);
-        }
-        
+
+        //for (int i = 0; i < ScoreQueue.Count; i++)
+        //{
+        //    Debug.Log(ScoreQueue[i]);
+        //}
+
+        Hide();
 
         DrawBoard();
 
@@ -293,7 +294,6 @@ public class SlidingMaze : MonoBehaviour {
 
     bool Scatter()
     {
-
         do
         {
             ScoreQueue.Clear();
@@ -310,12 +310,20 @@ public class SlidingMaze : MonoBehaviour {
                 }
             }
 
-            int temp = 10;
+            if(ScoreQueue.Count == 0)
+            {
+                break;
+            }
+
+            int temp = 40; //Prone to Change
             
-            if(ScoreQueue.Count < 10)
+            if(ScoreQueue.Count < 40) //Prone to Change
             {
                 temp = ScoreQueue.Count;
             }
+
+            //Debug.Log("Queue = " + ScoreQueue.Count);
+            //Debug.Log("Temp = " + temp);
 
             int RandQueueIndex = Random.Range(0, temp);
 
@@ -335,9 +343,32 @@ public class SlidingMaze : MonoBehaviour {
             }
             Tiles[x, y] = 1;
 
-                    } while (ScoreQueue.Count > 0); //Maybe not?
+                    } while (ScoreQueue.Count > 30); //Prone to Change
 
         return true;
+    }
+
+    void Hide()
+    {
+        for (int i = 0; i < 35; i++) //x
+        {
+            for (int j = 0; j < 19; j++) //y
+            {
+                if(Tiles[i, j] == 0 || Tiles[i, j] == 20)
+                {
+                    Tiles[i, j] = -1;
+                }
+                else if (Tiles[i, j] == 10)
+                {
+                    Tiles[i, j] = 1;
+                }
+                else
+                {
+
+                }
+            }
+
+        }
     }
 
     Vector2 RandDir(int X, int Y, Vector2 BanDir)
