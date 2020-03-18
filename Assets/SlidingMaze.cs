@@ -21,7 +21,7 @@ public class SlidingMaze : MonoBehaviour {
 		
 		bool Success = MainPath();
 		
-		while(Success == false) // Add one for Sidepath
+		while(Success == false) // Add one for Sidepath ***
 		{
 			//Debug.Log("Failed. Retrying");
 			Tiles = new int[35, 19];
@@ -131,7 +131,12 @@ public class SlidingMaze : MonoBehaviour {
 				return false;
 
 			}
+
             Vector2 BlockCoords = RandCoords(X, Y, Dir);
+            if(BlockCoords == Vector2.zero)
+            {
+                return false;
+            }
 
             //Debug.Log(Dir);
             //Horizontal or Vertical
@@ -224,7 +229,12 @@ public class SlidingMaze : MonoBehaviour {
                 return false;
 
             }
+
             Vector2 BlockCoords = RandCoords(X, Y, Dir);
+            if (BlockCoords == Vector2.zero)
+            {
+                return false;
+            }
 
             //Debug.Log(Dir);
             //Horizontal or Vertical   //Soft Ban for buckshot?
@@ -377,9 +387,8 @@ public class SlidingMaze : MonoBehaviour {
         List<Vector2> Dirs = new List<Vector2>();
         bool ValidDir = false;
 
-        //Border
-
-        for (int u = Y; u < 19; u++)
+        //Check North
+        for (int u = Y+1; u < 19; u++)
         {
             if (Tiles[X, u] == 1 || Tiles[X, u] == 3 || Tiles[X, u] == 10)
             {
@@ -399,9 +408,8 @@ public class SlidingMaze : MonoBehaviour {
 
         ValidDir = false;
 
-        //Border
-
-        for (int u = Y; u > -1; u--)
+        //Check South
+        for (int u = Y-1; u > -1; u--)
         {
             if (Tiles[X, u] == 1 || Tiles[X, u] == 3 || Tiles[X, u] == 10)
             {
@@ -421,9 +429,8 @@ public class SlidingMaze : MonoBehaviour {
 
         ValidDir = false;
 
-        //Border
-
-        for (int u = X; u < 35; u++)
+        //Check East
+        for (int u = X+1; u < 35; u++)
         {
             if (Tiles[u, Y] == 1 || Tiles[u, Y] == 3 || Tiles[u, Y] == 10)
             {
@@ -443,9 +450,8 @@ public class SlidingMaze : MonoBehaviour {
 
         ValidDir = false;
 
-        //Border
-
-        for (int u = X; u > -1; u--)
+        //Check West
+        for (int u = X-1; u > -1; u--)
         {
             if (Tiles[u, Y] == 1 || Tiles[u, Y] == 3 || Tiles[u, Y] == 10)
             {
@@ -465,8 +471,7 @@ public class SlidingMaze : MonoBehaviour {
 
         ValidDir = false;
 
-        //Border
-
+        //Choose Random Direction
         int i = Random.Range(0, Dirs.Count);
 
         if(Dirs.Count == 0)
@@ -529,7 +534,7 @@ public class SlidingMaze : MonoBehaviour {
                 Tiles[X, GoodBlocks[i]] = -1;
             }
         }
-        else
+        else if (Dir.y == 0)
         {
             EndCoords = new Vector2(GoodBlocks[End], Y);
             for (int i = 0; i < End; i++)
@@ -537,7 +542,21 @@ public class SlidingMaze : MonoBehaviour {
                 Tiles[GoodBlocks[i], Y] = -1;
             }
         }
-        return EndCoords;
+        //Failure
+        else
+        {
+            EndCoords = new Vector2(0, 0);
+        }
+
+        //Don't place on banned tile
+        if (Tiles[(int)EndCoords.x, (int)EndCoords.y] == -1)
+        {
+            return Vector2.zero;
+        }
+        else
+        {
+            return EndCoords;
+        }
     }
 
     int Score (int x, int y)
