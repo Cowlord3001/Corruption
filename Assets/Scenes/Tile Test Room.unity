@@ -11247,6 +11247,9 @@ MonoBehaviour:
   PinkTile: {fileID: 1446203542}
   BorderTile: {fileID: 94997271}
   BlueTile: {fileID: 1853658542}
+  GreyTile: {fileID: 1922532663}
+  MainPathLength: 9
+  Developer_Mode: 1
 --- !u!4 &423190320
 Transform:
   m_ObjectHideFlags: 0
@@ -38190,6 +38193,9 @@ MonoBehaviour:
   PinkTile: {fileID: 1446203542}
   BorderTile: {fileID: 94997271}
   BlueTile: {fileID: 1853658542}
+  GreyTile: {fileID: 1922532663}
+  MainPathLength: 9
+  Developer_Mode: 1
 --- !u!4 &1435978748
 Transform:
   m_ObjectHideFlags: 0
@@ -44890,6 +44896,9 @@ MonoBehaviour:
   PinkTile: {fileID: 1446203542}
   BorderTile: {fileID: 94997271}
   BlueTile: {fileID: 1853658542}
+  GreyTile: {fileID: 1922532663}
+  MainPathLength: 9
+  Developer_Mode: 1
 --- !u!4 &1672633660
 Transform:
   m_ObjectHideFlags: 0
