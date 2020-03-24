@@ -9,6 +9,8 @@ public class SlidingMaze : MonoBehaviour {
 	Vector2[] PathPoints;
     public int MainPathLength;
 
+    List<GameObject> TileObjects;
+
     List<Vector3> ScoreQueue;
 
     public bool Developer_Mode;
@@ -16,43 +18,15 @@ public class SlidingMaze : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-		PathPoints = new Vector2[MainPathLength]; //If changes made, this may break
+        TileObjects = new List<GameObject>();
+
+		PathPoints = new Vector2[MainPathLength];
 		
         Tiles = new int[35, 19];
 
         ScoreQueue = new List<Vector3>();
-		
-		bool Success = MainPath();
-		
-		while(Success == false) // Add one for Sidepath ***
-		{
-			//Debug.Log("Failed. Retrying");
-			Tiles = new int[35, 19];
-            Success = MainPath();
-        }
 
-        for (int i = 0; i < MainPathLength; i++)
-        {
-            SidePath(i);
-        }
-
-        Scatter();
-
-
-        //for (int i = 0; i < ScoreQueue.Count; i++)
-        //{
-        //    Debug.Log(ScoreQueue[i]);
-        //}
-
-        if (Developer_Mode != true)
-        {
-            Hide();
-        }
-
-        DrawBoard();
-
-        //Debug.Log(Score(0, 0));
-        //Tiles[_,_] = _ {0-2}
+        StartCoroutine(CreateBoard());
     }
 	
 
@@ -70,13 +44,13 @@ public class SlidingMaze : MonoBehaviour {
             {
                 if(Tiles[i,j] == 0)
                 {
-                    Instantiate(PinkTile, transform.position + new Vector3(i, j, 0), Quaternion.identity);
-
+                    GameObject GO = Instantiate(PinkTile, transform.position + new Vector3(i, j, 0), Quaternion.identity);
+                    TileObjects.Add(GO);
                 }
                 else if(Tiles[i,j] == 1)
                 {
-                    Instantiate(RedTile, transform.position + new Vector3(i, j, 0), Quaternion.identity);
-
+                    GameObject GO = Instantiate(RedTile, transform.position + new Vector3(i, j, 0), Quaternion.identity);
+                    TileObjects.Add(GO);
                 }
                 else if (Tiles[i, j] == 2)
                 {
@@ -85,26 +59,40 @@ public class SlidingMaze : MonoBehaviour {
                 }
                 else if (Tiles[i, j] == -1)
                 {
-                    Instantiate(PurpleTile, transform.position + new Vector3(i, j, 0), Quaternion.identity);
+                    GameObject GO = Instantiate(PurpleTile, transform.position + new Vector3(i, j, 0), Quaternion.identity);
+                    TileObjects.Add(GO);
                 }
                 else if (Tiles[i, j] == 3)
                 {
-                    Instantiate(EndTile, transform.position + new Vector3(i, j, 0), Quaternion.identity);
+                    GameObject GO = Instantiate(EndTile, transform.position + new Vector3(i, j, 0), Quaternion.identity);
+                    TileObjects.Add(GO);
                 }
                 else if (Tiles [i, j] == 10)
                 {
-                    Instantiate(BorderTile, transform.position + new Vector3(i, j, 0), Quaternion.identity);
+                    GameObject GO = Instantiate(BorderTile, transform.position + new Vector3(i, j, 0), Quaternion.identity);
+                    TileObjects.Add(GO);
                 }
                 else if (Tiles [i, j] == 20)
                 {
-                    Instantiate(BlueTile, transform.position + new Vector3(i, j, 0), Quaternion.identity);
+                    GameObject GO = Instantiate(BlueTile, transform.position + new Vector3(i, j, 0), Quaternion.identity);
+                    TileObjects.Add(GO);
                 }
                 else if (Tiles [i,j] == 30)
                 {
-                    Instantiate(GreyTile, transform.position + new Vector3(i, j, 0), Quaternion.identity);
+                    GameObject GO = Instantiate(GreyTile, transform.position + new Vector3(i, j, 0), Quaternion.identity);
+                    TileObjects.Add(GO);
                 }
             }
         }
+    }
+
+    void EraseBoard()
+    {
+        for (int i = 0; i < TileObjects.Count; i++)
+        {
+            Destroy(TileObjects[i]);
+        }
+        TileObjects.Clear();
     }
 
     bool MainPath()
@@ -149,14 +137,14 @@ public class SlidingMaze : MonoBehaviour {
             {
                 //Horizontal
                 //////////////////////if statements?
-                for (int a = X; a <= (int)BlockCoords.x; a++)
+                for (int a = X; a <= Mathf.RoundToInt(BlockCoords.x); a++)
                 {
                     if (Y != 0 && Tiles[a, Y-1] == 0)
                     Tiles[a, Y-1] = -1;
                     if (Y != 18 && Tiles[a, Y + 1] == 0)
                     Tiles[a, Y + 1] = -1;
                 }
-                for (int a = X; a >= (int)BlockCoords.x; a--)
+                for (int a = X; a >= Mathf.RoundToInt(BlockCoords.x); a--)
                 {
                     if (Y != 0 && Tiles[a, Y - 1] == 0)
                         Tiles[a, Y - 1] = -1;
@@ -166,22 +154,22 @@ public class SlidingMaze : MonoBehaviour {
                 //Ban perpindicular to Horizontal
                 //for (int j = 0; j < 19; j++)
                 //{
-                //    if(Tiles[(int)BlockCoords.x, (int)j] == 0)
-                //    Tiles[(int)BlockCoords.x, (int)j] = -1;
+                //    if(Tiles[Mathf.RoundToInt(BlockCoords.x), Mathf.RoundToInt(j)] == 0)
+                //    Tiles[Mathf.RoundToInt(BlockCoords.x), Mathf.RoundToInt(j)] = -1;
                 //}
             }
             else
             {
                 //Vertically
 
-                for (int a = Y; a <= (int)BlockCoords.y; a++)
+                for (int a = Y; a <= Mathf.RoundToInt(BlockCoords.y); a++)
                 {
                     if (X != 0 && Tiles[X - 1, a] == 0)
                         Tiles[X - 1, a] = -1;
                     if (X != 34 && Tiles[X + 1, a] == 0)
                         Tiles[X + 1, a] = -1;
                 }
-                for (int a = Y; a >= (int)BlockCoords.y; a--)
+                for (int a = Y; a >= Mathf.RoundToInt(BlockCoords.y); a--)
                 {
                     if (X != 0 && Tiles[X - 1, a] == 0)
                         Tiles[X - 1, a] = -1;
@@ -191,24 +179,24 @@ public class SlidingMaze : MonoBehaviour {
                 //Ban perpindicular to Vertical
                 //for (int j = 0; j < 35; j++)
                 //{
-                //    if(Tiles[j, (int)BlockCoords.y] == 0)
-                //    Tiles[j, (int)BlockCoords.y] = -1;
+                //    if(Tiles[j, Mathf.RoundToInt(BlockCoords.y)] == 0)
+                //    Tiles[j, Mathf.RoundToInt(BlockCoords.y)] = -1;
                 //}
             }
 
             //Place Block at destination coords
             if(i == MainPathLength - 1)
             {
-                Tiles[(int)BlockCoords.x, (int)BlockCoords.y] = 3;
+                Tiles[Mathf.RoundToInt(BlockCoords.x), Mathf.RoundToInt(BlockCoords.y)] = 3;
             }
             else
             {
-                Tiles[(int)BlockCoords.x, (int)BlockCoords.y] = 1;
+                Tiles[Mathf.RoundToInt(BlockCoords.x), Mathf.RoundToInt(BlockCoords.y)] = 1;
             }
 
             //Move Path walker back one
-            X = (int)BlockCoords.x - (int)Dir.x;
-            Y = (int)BlockCoords.y - (int)Dir.y;
+            X = Mathf.RoundToInt(BlockCoords.x) - Mathf.RoundToInt(Dir.x);
+            Y = Mathf.RoundToInt(BlockCoords.y) - Mathf.RoundToInt(Dir.y);
 
             //Ban Blocks Right of Start
             if (i == 0)
@@ -231,8 +219,8 @@ public class SlidingMaze : MonoBehaviour {
     {
         Vector2 Dir = Vector2.zero; //Might be bad & broken????
         int X, Y;
-        X = (int)PathPoints[PathNum].x;
-        Y = (int)PathPoints[PathNum].y;
+        X = Mathf.RoundToInt(PathPoints[PathNum].x);
+        Y = Mathf.RoundToInt(PathPoints[PathNum].y);
 
         //Main Path Loop
         for (int i = 0; i < 3; i++) //Random number of blocks (Dynamic - Maximum of __, if impossible, end but don't reset)? For main path too?
@@ -258,14 +246,14 @@ public class SlidingMaze : MonoBehaviour {
             {
                 //Horizontal
                 //////////////////////if statements?
-                for (int a = X; a <= (int)BlockCoords.x; a++)
+                for (int a = X; a <= Mathf.RoundToInt(BlockCoords.x); a++)
                 {
                     if (Y != 0 && Tiles[a, Y - 1] == 0)
                         Tiles[a, Y - 1] = -1;
                     if (Y != 18 && Tiles[a, Y + 1] == 0)
                         Tiles[a, Y + 1] = -1;
                 }
-                for (int a = X; a >= (int)BlockCoords.x; a--)
+                for (int a = X; a >= Mathf.RoundToInt(BlockCoords.x); a--)
                 {
                     if (Y != 0 && Tiles[a, Y - 1] == 0)
                         Tiles[a, Y - 1] = -1;
@@ -275,22 +263,22 @@ public class SlidingMaze : MonoBehaviour {
                 //Ban perpindicular to Horizontal
                 //for (int j = 0; j < 19; j++)
                 //{
-                //    if(Tiles[(int)BlockCoords.x, (int)j] == 0)
-                //    Tiles[(int)BlockCoords.x, (int)j] = -1;
+                //    if(Tiles[Mathf.RoundToInt(BlockCoords.x), Mathf.RoundToInt(j)] == 0)
+                //    Tiles[Mathf.RoundToInt(BlockCoords.x), Mathf.RoundToInt(j)] = -1;
                 //}
             }
             else
             {
                 //Vertically
 
-                for (int a = Y; a <= (int)BlockCoords.y; a++)
+                for (int a = Y; a <= Mathf.RoundToInt(BlockCoords.y); a++)
                 {
                     if (X != 0 && Tiles[X - 1, a] == 0)
                         Tiles[X - 1, a] = -1;
                     if (X != 34 && Tiles[X + 1, a] == 0)
                         Tiles[X + 1, a] = -1;
                 }
-                for (int a = Y; a >= (int)BlockCoords.y; a--)
+                for (int a = Y; a >= Mathf.RoundToInt(BlockCoords.y); a--)
                 {
                     if (X != 0 && Tiles[X - 1, a] == 0)
                         Tiles[X - 1, a] = -1;
@@ -300,17 +288,17 @@ public class SlidingMaze : MonoBehaviour {
                 //Ban perpindicular to Vertical
                 //for (int j = 0; j < 35; j++)
                 //{
-                //    if(Tiles[j, (int)BlockCoords.y] == 0)
-                //    Tiles[j, (int)BlockCoords.y] = -1;
+                //    if(Tiles[j, Mathf.RoundToInt(BlockCoords.y)] == 0)
+                //    Tiles[j, Mathf.RoundToInt(BlockCoords.y)] = -1;
                 //}
             }
 
             //Place Block at destination coords
-            Tiles[(int)BlockCoords.x, (int)BlockCoords.y] = 10;
+            Tiles[Mathf.RoundToInt(BlockCoords.x), Mathf.RoundToInt(BlockCoords.y)] = 10;
 
             //Move Path walker back one
-            X = (int)BlockCoords.x - (int)Dir.x;
-            Y = (int)BlockCoords.y - (int)Dir.y;
+            X = Mathf.RoundToInt(BlockCoords.x) - Mathf.RoundToInt(Dir.x);
+            Y = Mathf.RoundToInt(BlockCoords.y) - Mathf.RoundToInt(Dir.y);
 
             SidePath(X, Y);
 
@@ -347,14 +335,14 @@ public class SlidingMaze : MonoBehaviour {
             {
                 //Horizontal
                 //////////////////////if statements?
-                for (int a = X; a <= (int)BlockCoords.x; a++)
+                for (int a = X; a <= Mathf.RoundToInt(BlockCoords.x); a++)
                 {
                     if (Y != 0 && Tiles[a, Y - 1] == 0)
                         Tiles[a, Y - 1] = -1;
                     if (Y != 18 && Tiles[a, Y + 1] == 0)
                         Tiles[a, Y + 1] = -1;
                 }
-                for (int a = X; a >= (int)BlockCoords.x; a--)
+                for (int a = X; a >= Mathf.RoundToInt(BlockCoords.x); a--)
                 {
                     if (Y != 0 && Tiles[a, Y - 1] == 0)
                         Tiles[a, Y - 1] = -1;
@@ -364,22 +352,22 @@ public class SlidingMaze : MonoBehaviour {
                 //Ban perpindicular to Horizontal
                 //for (int j = 0; j < 19; j++)
                 //{
-                //    if(Tiles[(int)BlockCoords.x, (int)j] == 0)
-                //    Tiles[(int)BlockCoords.x, (int)j] = -1;
+                //    if(Tiles[Mathf.RoundToInt(BlockCoords.x), Mathf.RoundToInt(j)] == 0)
+                //    Tiles[Mathf.RoundToInt(BlockCoords.x), Mathf.RoundToInt(j)] = -1;
                 //}
             }
             else
             {
                 //Vertically
 
-                for (int a = Y; a <= (int)BlockCoords.y; a++)
+                for (int a = Y; a <= Mathf.RoundToInt(BlockCoords.y); a++)
                 {
                     if (X != 0 && Tiles[X - 1, a] == 0)
                         Tiles[X - 1, a] = -1;
                     if (X != 34 && Tiles[X + 1, a] == 0)
                         Tiles[X + 1, a] = -1;
                 }
-                for (int a = Y; a >= (int)BlockCoords.y; a--)
+                for (int a = Y; a >= Mathf.RoundToInt(BlockCoords.y); a--)
                 {
                     if (X != 0 && Tiles[X - 1, a] == 0)
                         Tiles[X - 1, a] = -1;
@@ -389,17 +377,17 @@ public class SlidingMaze : MonoBehaviour {
                 //Ban perpindicular to Vertical
                 //for (int j = 0; j < 35; j++)
                 //{
-                //    if(Tiles[j, (int)BlockCoords.y] == 0)
-                //    Tiles[j, (int)BlockCoords.y] = -1;
+                //    if(Tiles[j, Mathf.RoundToInt(BlockCoords.y)] == 0)
+                //    Tiles[j, Mathf.RoundToInt(BlockCoords.y)] = -1;
                 //}
             }
 
             //Place Block at destination coords
-            Tiles[(int)BlockCoords.x, (int)BlockCoords.y] = 30;
+            Tiles[Mathf.RoundToInt(BlockCoords.x), Mathf.RoundToInt(BlockCoords.y)] = 30;
 
             //Move Path walker back one
-            X = (int)BlockCoords.x - (int)Dir.x;
-            Y = (int)BlockCoords.y - (int)Dir.y;
+            X = Mathf.RoundToInt(BlockCoords.x) - Mathf.RoundToInt(Dir.x);
+            Y = Mathf.RoundToInt(BlockCoords.y) - Mathf.RoundToInt(Dir.y);
 
 
 
@@ -443,8 +431,8 @@ public class SlidingMaze : MonoBehaviour {
 
             int RandQueueIndex = Random.Range(0, temp);
 
-            int x = (int)ScoreQueue[RandQueueIndex].x;
-            int y = (int)ScoreQueue[RandQueueIndex].y;
+            int x = Mathf.RoundToInt(ScoreQueue[RandQueueIndex].x);
+            int y = Mathf.RoundToInt(ScoreQueue[RandQueueIndex].y);
 
             for (int i = 0; i < 5; i++) //y
             {
@@ -590,14 +578,14 @@ public class SlidingMaze : MonoBehaviour {
 
     Vector2 RandCoords(int X, int Y, Vector2 Dir)
     {
-        X += (int)Dir.x;
-        Y += (int)Dir.y;
+        X += Mathf.RoundToInt(Dir.x);
+        Y += Mathf.RoundToInt(Dir.y);
 
-        Tiles[X, Y] = -1;
+        Tiles[X, Y] = -1; //Broken? Associated w/ Lines?
 
-        X += (int)Dir.x;
-        Y += (int)Dir.y;
-
+        X += Mathf.RoundToInt(Dir.x);
+        Y += Mathf.RoundToInt(Dir.y);
+        
         List<int> GoodBlocks = new List<int>();
         while (X < 35 && Y < 19 && X >= 0 && Y >= 0)
         {
@@ -614,43 +602,49 @@ public class SlidingMaze : MonoBehaviour {
 
             if (/*Tiles[X, Y] != -1 && */Tiles[X, Y] != 2)
             {
-                if ((int)Dir.x == 0)
+                if (Mathf.RoundToInt(Dir.x) == 0)
                 {
                     GoodBlocks.Add(Y);
                 }
-                else if ((int)Dir.y == 0)
+                else if (Mathf.RoundToInt(Dir.y) == 0)
                 {
                     GoodBlocks.Add(X);
                 }
 
             }
 
-            X += (int)Dir.x;
-            Y += (int)Dir.y;
+            X += Mathf.RoundToInt(Dir.x);
+            Y += Mathf.RoundToInt(Dir.y);
         }
 
-        int End = Random.Range(0, GoodBlocks.Count);
+        int End = Random.Range(/*1*/0, GoodBlocks.Count);
 
         if(GoodBlocks.Count == 0)
         {
             return Vector2.zero;
         }
-
+        
         Vector2 EndCoords;
-        if ((int)Dir.x == 0)
+        if (Mathf.RoundToInt(Dir.x) == 0)
         {
             EndCoords = new Vector2(X, GoodBlocks[End]);
-            for (int i = 0; i < End; i++)
+            if (EndCoords != Vector2.zero/* && Tiles[X, GoodBlocks[End]] == 0*/)
             {
-                Tiles[X, GoodBlocks[i]] = -1;
+                for (int i = 0; i < End; i++)
+                {
+                    Tiles[X, GoodBlocks[i]] = -1;
+                }
             }
         }
-        else if ((int)Dir.y == 0)
+        else if (Mathf.RoundToInt(Dir.y) == 0)
         {
             EndCoords = new Vector2(GoodBlocks[End], Y);
-            for (int i = 0; i < End; i++)
+            if (EndCoords != Vector2.zero/* && Tiles[GoodBlocks[End], Y] == 0*/)
             {
-                Tiles[GoodBlocks[i], Y] = -1;
+                for (int i = 0; i < End; i++)
+                {
+                    Tiles[GoodBlocks[i], Y] = -1;
+                }
             }
         }
         //Failure
@@ -660,7 +654,7 @@ public class SlidingMaze : MonoBehaviour {
         }
 
         //Don't place on banned tile
-        if (Tiles[(int)EndCoords.x, (int)EndCoords.y] == -1)
+        if (Tiles[Mathf.RoundToInt(EndCoords.x), Mathf.RoundToInt(EndCoords.y)] == -1)
         {
             return Vector2.zero;
         }
@@ -717,4 +711,43 @@ public class SlidingMaze : MonoBehaviour {
         }
     }
     
+    IEnumerator CreateBoard()
+    {
+        bool Success = MainPath();
+
+        while (Success == false)
+        {
+            Tiles = new int[35, 19];
+            Success = MainPath();
+        }
+
+        DrawBoard();
+        yield return new WaitForSeconds(2f);
+        EraseBoard();
+
+        for (int i = 0; i < MainPathLength; i++)
+        {
+            SidePath(i);
+            //DrawBoard();
+            //yield return new WaitForSeconds(2f);
+            //EraseBoard();
+        }
+
+        DrawBoard();
+        yield return new WaitForSeconds(2f);
+        EraseBoard();
+
+        Scatter();
+
+        DrawBoard();
+        yield return new WaitForSeconds(2f);
+        EraseBoard();
+
+        if (Developer_Mode != true)
+        {
+            Hide();
+        }
+
+        DrawBoard();
+    }
 }
