@@ -26,6 +26,8 @@ public class TileMove : MonoBehaviour {
 
     public int Weight;
 
+    public bool Developer_Mode;
+
     public AudioSource Move;
     public AudioSource Finish;
     public AudioSource Yellow;
@@ -82,7 +84,10 @@ public class TileMove : MonoBehaviour {
                 StartMove();
             }
 
-            //TODO: Check if Targetpos is valid (raycast?)
+            if(Input.GetKeyDown(KeyCode.R) == true)
+            {
+                reload();
+            }
         }
         else if(Moving == true)
         {
@@ -101,7 +106,7 @@ public class TileMove : MonoBehaviour {
     {
         RaycastHit2D Hit = Physics2D.Raycast(StartPos + (TargetPos - StartPos) * .5f, TargetPos - StartPos, 1);
         Debug.Log("Tag = " + Hit.collider.tag);
-        if (Hit.collider.tag == "Red")
+        if (Hit.collider.tag == "Red" && Developer_Mode == false)
         {
             StopMovement();
         }
@@ -135,7 +140,7 @@ public class TileMove : MonoBehaviour {
         Moving = false;
 
         //End Function Early || Change Movement
-        if(CurrentTile.tag == "Yellow")
+        if(CurrentTile.tag == "Yellow" && Developer_Mode == false)
         {
             Yellow.Play();
             Invoke("reload", 1);
@@ -148,7 +153,7 @@ public class TileMove : MonoBehaviour {
             Invoke("NextStage", 1);
         }
 
-        else if(CurrentTile.tag == "Purple")
+        else if(CurrentTile.tag == "Purple" && Developer_Mode == false)
         {
             Weight = 1;
             gameObject.GetComponent<SpriteRenderer>().color = new Color(200 / 225f, 145 / 255f, 1);
@@ -157,7 +162,7 @@ public class TileMove : MonoBehaviour {
             StartPos = transform.position;
 
             RaycastHit2D Hit = Physics2D.Raycast(StartPos + (TargetPos - StartPos) * .5f, TargetPos - StartPos, 1);
-            if (Hit.collider.tag == "Red")
+            if (Hit.collider.tag == "Red" && Developer_Mode == false)
             {
                 Moving = false;
                 transform.position = CurrentTile.transform.position;
@@ -169,18 +174,18 @@ public class TileMove : MonoBehaviour {
         else
         {
             //Landing on Tile
-            if(CurrentTile.tag == "Orange")
+            if(CurrentTile.tag == "Orange" && Developer_Mode == false)
             {
                 Weight = -1;
                 gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 200/255f, 145/255f);
             }
 
-            if(CurrentTile.tag == "Green" && (Weight == 1 || Weight == 0))
+            if(CurrentTile.tag == "Green" && (Weight == 1 || Weight == 0) && Developer_Mode == false)
             {
                 CurrentTile = PrevTile;
             }
 
-            if (CurrentTile.tag == "Blue" && (Weight == -1 || Weight == 0))
+            if (CurrentTile.tag == "Blue" && (Weight == -1 || Weight == 0) && Developer_Mode == false)
             {
                 CurrentTile = PrevTile;
             }
@@ -199,7 +204,7 @@ public class TileMove : MonoBehaviour {
                     GameObject[] Neighbors = GetNeigh(Hit.collider.gameObject);
                     for (int i = 0; i < Neighbors.Length; i++)
                     {
-                        if (Neighbors[i].tag == "Yellow")
+                        if (Neighbors[i].tag == "Yellow" && Developer_Mode == false)
                         {
                             CurrentTile = PrevTile;
                         }

@@ -1490,9 +1490,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99049f75d077fe741b758b7f47724594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NewStart: {fileID: 650776780}
-  CamX: 95
-  CamSize: 11
+  NewStart: {fileID: 0}
+  CamX: 20
+  CamSize: 5
 --- !u!61 &88099453
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -10759,11 +10759,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
---- !u!1 &650776780 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1929400340436316, guid: 3ded5a98147863b498c8e15d102d3647,
-    type: 2}
-  m_PrefabInternal: {fileID: 343745235}
 --- !u!1 &653416232
 GameObject:
   m_ObjectHideFlags: 0
@@ -22223,7 +22218,6 @@ MonoBehaviour:
   OldStart: {fileID: 1757610816}
   CamSpeed: 5
   Weight: 0
-  Developer_Mode: 0
   Move: {fileID: 1352076773}
   Finish: {fileID: 1352076772}
   Yellow: {fileID: 1352076771}
