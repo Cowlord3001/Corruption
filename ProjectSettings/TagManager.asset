@@ -18,6 +18,7 @@ TagManager:
   - End
   - Button
   - Moving
+  - Static
   layers:
   - Default
   - TransparentFX

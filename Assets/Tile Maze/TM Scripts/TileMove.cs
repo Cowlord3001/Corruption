@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class TileMove : MonoBehaviour {
 
@@ -32,6 +33,7 @@ public class TileMove : MonoBehaviour {
     public AudioSource Finish;
     public AudioSource Yellow;
     public AudioSource Button;
+    public AudioSource Static;
 
     // Use this for initialization
     void Start ()
@@ -145,6 +147,13 @@ public class TileMove : MonoBehaviour {
             Yellow.Play();
             Invoke("reload", 1);
             //Death Animation?
+        }
+
+        else if (CurrentTile.tag == "Static" && Developer_Mode == false)
+        {
+            Static.Play();
+            InvokeRepeating("ScreenSpook", 0, .1f);
+            Invoke("reload", 1);
         }
 
         else if(CurrentTile.tag == "End")
@@ -267,6 +276,15 @@ public class TileMove : MonoBehaviour {
         Weight = 0;
         gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1);
 
+        Image Stat = GameObject.Find("Screen Static").GetComponent<Image>();
+        Color temp = Stat.color;
+        temp.a = 0;
+        Stat.color = temp;
+
+        Static.volume = 0;
+
+        CancelInvoke("ScreenSpook");
+
         for (int i = 0; i < ButtonsPressed.Count; i++)
         {
             ButtonsPressed[i].SendMessage("Reload");
@@ -331,6 +349,18 @@ public class TileMove : MonoBehaviour {
             Camera.main.orthographicSize = End.CamSize;
             Camera.main.transform.position = new Vector3(End.CamX, 0, -10);
         }
+    }
+
+    void ScreenSpook()
+    {
+        GameObject.Find("Screen Static").GetComponent<RectTransform>().rotation *= Quaternion.Euler(0,0,180);
+
+        Image Stat = GameObject.Find("Screen Static").GetComponent<Image>();
+        Color temp = Stat.color;
+        temp.a += .1f;
+        Stat.color = temp;
+
+        Static.volume += .1f;
     }
 
 }
