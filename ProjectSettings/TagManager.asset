@@ -19,6 +19,7 @@ TagManager:
   - Button
   - Moving
   - Static
+  - Maze
   layers:
   - Default
   - TransparentFX

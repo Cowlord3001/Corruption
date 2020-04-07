@@ -26,7 +26,7 @@ public class TileMove : MonoBehaviour {
     List <GameObject> ButtonsPressed;
 
     public int Weight;
-
+    float Timer;
     public bool Developer_Mode;
 
     public AudioSource Move;
@@ -47,6 +47,8 @@ public class TileMove : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate ()
     {
+        Timer += Time.deltaTime;
+
         if(Moving == false && CanMove == true)
         {
             if(Input.GetKeyDown(KeyCode.UpArrow) == true || Input.GetKeyDown(KeyCode.W) == true)
@@ -86,9 +88,10 @@ public class TileMove : MonoBehaviour {
                 StartMove();
             }
 
-            if(Input.GetKeyDown(KeyCode.R) == true)
+            if(Input.GetKeyDown(KeyCode.R) == true && Timer > 1)
             {
                 reload();
+                Timer = 0;
             }
         }
         else if(Moving == true)
@@ -290,6 +293,12 @@ public class TileMove : MonoBehaviour {
             ButtonsPressed[i].SendMessage("Reload");
         }
 
+        GameObject[] Mazes = GameObject.FindGameObjectsWithTag("Maze");
+        for (int i = 0; i < Mazes.Length; i++)
+        {
+            Mazes[i].GetComponent<SlidingMaze>().EraseBoard();
+            StartCoroutine(Mazes[i].GetComponent<SlidingMaze>().CreateBoard());
+        }
     }
 
     void NextStage()

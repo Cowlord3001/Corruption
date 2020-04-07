@@ -21,8 +21,6 @@ public class SlidingMaze : MonoBehaviour {
         TileObjects = new List<GameObject>();
 
 		PathPoints = new Vector2[MainPathLength];
-		
-        Tiles = new int[35, 19];
 
         ScoreQueue = new List<Vector3>();
 
@@ -85,7 +83,7 @@ public class SlidingMaze : MonoBehaviour {
         }
     }
 
-    void EraseBoard()
+    public void EraseBoard()
     {
         for (int i = 0; i < TileObjects.Count; i++)
         {
@@ -736,8 +734,9 @@ public class SlidingMaze : MonoBehaviour {
         }
     }
     
-    IEnumerator CreateBoard()
+    public IEnumerator CreateBoard()
     {
+        Tiles = new int[35, 19];
         bool Success = MainPath();
 
         while (Success == false)
