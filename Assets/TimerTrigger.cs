@@ -5,21 +5,28 @@ using UnityEngine;
 public class TimerTrigger : MonoBehaviour {
 
     public float MaxTime;
+    public static float _MaxTime;
     float CurrentTime;
-    GameObject Coll;
+    GameObject Player;
+    bool TimeOn;
 
     // Use this for initialization
-    void Start () {
-		
+    void Start ()
+    {
+        TimeOn = false;
+        _MaxTime = MaxTime;
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
         CurrentTime -= Time.deltaTime;
-        if(CurrentTime < 0)
+        if(CurrentTime < 0 && TimeOn == true)
         {
-            //Coll...
+            Player.GetComponent<TileMove>().MazeReload();
+            CurrentTime = MaxTime + 1;
+            Player.GetComponent<TileMove>().Static.Play();
+            Player.GetComponent<TileMove>().InvokeRepeating("MazeScreenSpook", MaxTime / 3, 1 / (2 / 3 * MaxTime));
         }
 	}
 
@@ -29,7 +36,11 @@ public class TimerTrigger : MonoBehaviour {
         {
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
             Timer();
-            Coll = collision.gameObject;
+            Player = collision.gameObject;
+            TimeOn = true;
+            Player.GetComponent<TileMove>().Static.Play();
+            Player.GetComponent<TileMove>().Static.volume = 0;
+            Player.GetComponent<TileMove>().InvokeRepeating("MazeScreenSpook", MaxTime / 3, 1 / (2 / 3 * MaxTime));
         }
     }
 
@@ -37,4 +48,5 @@ public class TimerTrigger : MonoBehaviour {
     {
         CurrentTime = MaxTime;
     }
+
 }

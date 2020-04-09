@@ -206,7 +206,7 @@ public class SlidingMaze : MonoBehaviour {
             //Ban Blocks Right of Start
             if (i == 0)
             {
-                Debug.Log(Dir);
+                //Debug.Log(Dir);
                 for (int j = 1; j < 35; j++)
                 {
                     if (Tiles[j, Start] == 0)

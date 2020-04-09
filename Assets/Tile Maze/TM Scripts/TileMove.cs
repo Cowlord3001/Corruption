@@ -292,12 +292,41 @@ public class TileMove : MonoBehaviour {
         {
             ButtonsPressed[i].SendMessage("Reload");
         }
+    }
 
+    public void MazeReload()
+    {
         GameObject[] Mazes = GameObject.FindGameObjectsWithTag("Maze");
         for (int i = 0; i < Mazes.Length; i++)
         {
             Mazes[i].GetComponent<SlidingMaze>().EraseBoard();
             StartCoroutine(Mazes[i].GetComponent<SlidingMaze>().CreateBoard());
+        }
+
+        transform.position = OldStart.transform.position;
+        Moving = false;
+        CanMove = true;
+        Weight = 0;
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1);
+
+        Image Stat = GameObject.Find("Screen Static").GetComponent<Image>();
+        Color temp = Stat.color;
+        temp.a = 0;
+        Stat.color = temp;
+
+        Image Stat2 = GameObject.Find("Maze Screen Static").GetComponent<Image>();
+        Color temp2 = Stat2.color;
+        temp2.a = 0;
+        Stat2.color = temp2;
+
+        Static.volume = 0;
+
+        CancelInvoke("ScreenSpook");
+        CancelInvoke("MazeScreenSpook");
+
+        for (int i = 0; i < ButtonsPressed.Count; i++)
+        {
+            ButtonsPressed[i].SendMessage("Reload");
         }
     }
 
@@ -372,4 +401,16 @@ public class TileMove : MonoBehaviour {
         Static.volume += .1f;
     }
 
+    public void MazeScreenSpook()
+    {
+        GameObject.Find("Maze Screen Static").GetComponent<RectTransform>().rotation *= Quaternion.Euler(0, 0, 180);
+
+        Image Stat = GameObject.Find("Maze Screen Static").GetComponent<Image>();
+        Color temp = Stat.color;
+        temp.a += 1 / (TimerTrigger._MaxTime * 2 / 3);
+        Stat.color = temp;
+        Debug.Log(temp.a);
+
+        Static.volume += 1 / (TimerTrigger._MaxTime * 2 / 3);
+    }
 }
