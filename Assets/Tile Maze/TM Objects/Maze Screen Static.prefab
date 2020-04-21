@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 222454546520310298}
   - component: {fileID: 114854694442751938}
   m_Layer: 5
-  m_Name: Screen Static 2
+  m_Name: Maze Screen Static
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

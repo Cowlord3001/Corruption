@@ -34,6 +34,7 @@ public class TileMove : MonoBehaviour {
     public AudioSource Yellow;
     public AudioSource Button;
     public AudioSource Static;
+    public AudioSource LongStatic;
 
     // Use this for initialization
     void Start ()
@@ -296,6 +297,7 @@ public class TileMove : MonoBehaviour {
 
     public void MazeReload()
     {
+        //Debug.Log("MR Start");
         GameObject[] Mazes = GameObject.FindGameObjectsWithTag("Maze");
         for (int i = 0; i < Mazes.Length; i++)
         {
@@ -319,7 +321,7 @@ public class TileMove : MonoBehaviour {
         temp2.a = 0;
         Stat2.color = temp2;
 
-        Static.volume = 0;
+        LongStatic.volume = 0;
 
         CancelInvoke("ScreenSpook");
         CancelInvoke("MazeScreenSpook");
@@ -403,14 +405,14 @@ public class TileMove : MonoBehaviour {
 
     public void MazeScreenSpook()
     {
+        //Debug.Log("MSS Start");
         GameObject.Find("Maze Screen Static").GetComponent<RectTransform>().rotation *= Quaternion.Euler(0, 0, 180);
 
         Image Stat = GameObject.Find("Maze Screen Static").GetComponent<Image>();
         Color temp = Stat.color;
-        temp.a += 1 / (TimerTrigger._MaxTime * 2 / 3);
+        temp.a += 1 / Mathf.Pow(TimerTrigger._MaxTime * 2f / 3f, 2f);
         Stat.color = temp;
-        Debug.Log(temp.a);
-
-        Static.volume += 1 / (TimerTrigger._MaxTime * 2 / 3);
+        
+        LongStatic.volume += 1 / Mathf.Pow(TimerTrigger._MaxTime * 2f / 3f, 2f);
     }
 }
