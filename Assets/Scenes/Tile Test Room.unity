@@ -1538,6 +1538,11 @@ Prefab:
       propertyPath: GreyTile
       value: 
       objectReference: {fileID: 1922532663}
+    - target: {fileID: 114178389922258772, guid: afadd4e8f94872f48892d596b58dfc8f,
+        type: 2}
+      propertyPath: Developer_Mode
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: afadd4e8f94872f48892d596b58dfc8f, type: 2}
   m_IsPrefabParent: 0
@@ -44943,7 +44948,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1359924104}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4, y: -7, z: 0}
+  m_LocalPosition: {x: 5, y: -7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

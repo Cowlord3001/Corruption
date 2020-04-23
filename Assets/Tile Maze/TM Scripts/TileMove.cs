@@ -280,14 +280,17 @@ public class TileMove : MonoBehaviour {
         Weight = 0;
         gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1);
 
-        Image Stat = GameObject.Find("Screen Static").GetComponent<Image>();
-        Color temp = Stat.color;
-        temp.a = 0;
-        Stat.color = temp;
+        if (GameObject.Find("Screen Static") != null)
+        {
+            Image Stat = GameObject.Find("Screen Static").GetComponent<Image>();
+            Color temp = Stat.color;
+            temp.a = 0;
+            Stat.color = temp;
 
-        Static.volume = 0;
+            Static.volume = 0;
 
-        CancelInvoke("ScreenSpook");
+            CancelInvoke("ScreenSpook");
+        }
 
         for (int i = 0; i < ButtonsPressed.Count; i++)
         {
@@ -368,12 +371,12 @@ public class TileMove : MonoBehaviour {
         float posdif = Mathf.Abs (End.CamX - Camera.main.transform.position.x);
         
 
-        if (sizedif > .1)
+        if (sizedif > .25)
         {
-            Camera.main.orthographicSize += Time.deltaTime * (CamSpeed/2 * SizeDir / Mathf.Abs(SizeDir));
+            Camera.main.orthographicSize += Time.deltaTime * (CamSpeed/(posdif/sizedif) * SizeDir / Mathf.Abs(SizeDir));
         }
 
-        if (posdif > .1)
+        if (posdif > .25)
         {
             Camera.main.transform.position += Time.deltaTime * (CamSpeed * CamDir / Mathf.Abs(CamDir) * Vector3.right);
         }
@@ -381,7 +384,7 @@ public class TileMove : MonoBehaviour {
         //Debug.Log(sizedif);
         //Debug.Log(posdif);
 
-        if (sizedif <= .1 && posdif <= .1)
+        if (sizedif <= .25 && posdif <= .25)
         {
             CancelInvoke("CameraUpdate");
             Moving = false;
@@ -414,5 +417,20 @@ public class TileMove : MonoBehaviour {
         Stat.color = temp;
         
         LongStatic.volume += 1 / Mathf.Pow(TimerTrigger._MaxTime * 2f / 3f, 2f);
+    }
+
+    public void MazeCameraUpdate()
+    {
+        float camx = gameObject.transform.position.x;
+        float camy = gameObject.transform.position.y;
+        
+        Camera.main.orthographicSize -= 1 / Mathf.Pow(TimerTrigger._MaxTime * 2f / 3f, 2f);
+
+        //float minx = camx - End.CamX;
+        //float maxx = camx + End.CamX;
+        //float miny = camy;
+        //float maxy = camy;
+
+        Camera.main.transform.position = new Vector3(camx, camy, -10);
     }
 }

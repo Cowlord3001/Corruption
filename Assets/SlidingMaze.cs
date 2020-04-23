@@ -192,6 +192,10 @@ public class SlidingMaze : MonoBehaviour {
             //Place Block at destination coords
             if(i == MainPathLength - 1)
             {
+                if(Mathf.RoundToInt(BlockCoords.x) < 2)
+                {
+                    return false;
+                }
                 Tiles[Mathf.RoundToInt(BlockCoords.x), Mathf.RoundToInt(BlockCoords.y)] = 3;
             }
             else
