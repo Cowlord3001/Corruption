@@ -28,6 +28,7 @@ public class TimerTrigger : MonoBehaviour {
             CurrentTime = MaxTime + 1;
             Player.GetComponent<TileMove>().LongStatic.Play();
             Player.GetComponent<TileMove>().InvokeRepeating("MazeScreenSpook", MaxTime / 3, 1 / (2f / 3f * MaxTime));
+            Player.GetComponent<TileMove>().InvokeRepeating("MazeCameraUpdate", MaxTime / 3, 1 / (2f / 3f * MaxTime));
             //Debug.Log(1 / (2f / 3f * MaxTime));
             //Debug.Log(MaxTime);
         }
@@ -45,6 +46,7 @@ public class TimerTrigger : MonoBehaviour {
             Player.GetComponent<TileMove>().LongStatic.Play();
             Player.GetComponent<TileMove>().LongStatic.volume = 0;
             Player.GetComponent<TileMove>().InvokeRepeating("MazeScreenSpook", MaxTime / 3, 1 / (2f / 3f * MaxTime));
+            Player.GetComponent<TileMove>().InvokeRepeating("MazeCameraUpdate", MaxTime / 3, 1 / (2f / 3f * MaxTime));
         }
     }
 

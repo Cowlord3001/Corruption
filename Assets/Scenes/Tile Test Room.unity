@@ -56658,7 +56658,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NewStart: {fileID: 96320090}
   CamX: 28
-  CamSize: 12
+  CamSize: 11
 --- !u!61 &1793276368
 BoxCollider2D:
   m_ObjectHideFlags: 0

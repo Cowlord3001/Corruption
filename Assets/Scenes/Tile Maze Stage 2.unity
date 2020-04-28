@@ -6303,6 +6303,10 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1713946782729158, guid: 3b270aa312022c04f8a3ce63298e77a5, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3b270aa312022c04f8a3ce63298e77a5, type: 2}
   m_IsPrefabParent: 0
@@ -22329,6 +22333,7 @@ MonoBehaviour:
   Yellow: {fileID: 1352076771}
   Button: {fileID: 1352076774}
   Static: {fileID: 0}
+  LongStatic: {fileID: 0}
 --- !u!82 &1352076771
 AudioSource:
   m_ObjectHideFlags: 0
@@ -23279,6 +23284,10 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1248265780527724, guid: 1785a47775bd37848bf28c7baa4ba86c, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1785a47775bd37848bf28c7baa4ba86c, type: 2}

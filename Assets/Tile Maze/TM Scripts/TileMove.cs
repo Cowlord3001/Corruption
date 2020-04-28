@@ -326,8 +326,12 @@ public class TileMove : MonoBehaviour {
 
         LongStatic.volume = 0;
 
+        Camera.main.orthographicSize = End.CamSize;
+        Camera.main.transform.position = new Vector3(End.CamX, 0, -10);
+
         CancelInvoke("ScreenSpook");
         CancelInvoke("MazeScreenSpook");
+        CancelInvoke("MazeCameraUpdate");
 
         for (int i = 0; i < ButtonsPressed.Count; i++)
         {
@@ -423,13 +427,34 @@ public class TileMove : MonoBehaviour {
     {
         float camx = gameObject.transform.position.x;
         float camy = gameObject.transform.position.y;
-        
-        Camera.main.orthographicSize -= 1 / Mathf.Pow(TimerTrigger._MaxTime * 2f / 3f, 2f);
 
-        //float minx = camx - End.CamX;
-        //float maxx = camx + End.CamX;
-        //float miny = camy;
-        //float maxy = camy;
+        float width = Camera.main.orthographicSize * Camera.main.aspect;
+
+        Camera.main.orthographicSize -= End.CamSize / Mathf.Pow(TimerTrigger._MaxTime * 2f / 3f, 2f);
+
+        if (Mathf.Abs(camy) > Mathf.Abs(11f - Camera.main.orthographicSize))
+        {
+            if (camy > 0)
+            {
+                camy = 11f - Camera.main.orthographicSize;
+            }
+            else
+            {
+                camy = -11f + Camera.main.orthographicSize;
+            }
+        }
+
+        if (Mathf.Abs(camx - End.CamX) > Mathf.Abs(19.4f - width))
+        {
+            if (camx > End.CamX)
+            {
+                camx = 19.4f + End.CamX - width;
+            }
+            else
+            {
+                camx = -19.4f + End.CamX + width;
+            }
+        }
 
         Camera.main.transform.position = new Vector3(camx, camy, -10);
     }
