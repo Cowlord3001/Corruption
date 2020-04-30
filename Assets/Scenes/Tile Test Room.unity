@@ -44310,6 +44310,7 @@ MonoBehaviour:
   Button: {fileID: 1352076774}
   Static: {fileID: 1352076775}
   LongStatic: {fileID: 1352076776}
+  maxrotation: 90
 --- !u!82 &1352076771
 AudioSource:
   m_ObjectHideFlags: 0
