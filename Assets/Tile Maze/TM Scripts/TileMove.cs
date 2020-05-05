@@ -330,6 +330,7 @@ public class TileMove : MonoBehaviour {
         Camera.main.transform.position = new Vector3(End.CamX, 0, -10);
         Camera.main.transform.rotation = Quaternion.identity;
         turning = false;
+        maxrotation = Mathf.Abs(maxrotation);
 
         CancelInvoke("ScreenSpook");
         CancelInvoke("MazeScreenSpook");
@@ -479,12 +480,11 @@ public class TileMove : MonoBehaviour {
         }
         if (maxrotation > 0)
         {
-            Camera.main.transform.rotation *= Quaternion.Euler(0, 0, (maxrotation - Camera.main.transform.rotation.eulerAngles.z) / Mathf.Pow(TimerTrigger._MaxTime * 2f / 3f, 2f));
+            Camera.main.transform.rotation *= Quaternion.Euler(0, 0, (maxrotation) / Mathf.Pow(TimerTrigger._MaxTime * 2f / 3f, 2f));
         }
         else
         {
-            Camera.main.transform.rotation *= Quaternion.Euler(0, 0, (maxrotation + Camera.main.transform.rotation.eulerAngles.z) / Mathf.Pow(TimerTrigger._MaxTime * 2f / 3f, 2f));
+            Camera.main.transform.rotation *= Quaternion.Euler(0, 0, (maxrotation) / Mathf.Pow(TimerTrigger._MaxTime * 2f / 3f, 2f));
         }
-        //Debug.Log((maxrotation - Camera.main.transform.rotation.eulerAngles.z) / Mathf.Pow(TimerTrigger._MaxTime * 2f / 3f, 2f));
     }
 }

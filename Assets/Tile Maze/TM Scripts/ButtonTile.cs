@@ -5,11 +5,13 @@ using UnityEngine;
 public class ButtonTile : MonoBehaviour {
 
     public bool Reversable;
+    public bool MultTypes;
     Color[] ColorMem;
     string[] TagMem;
 
     public GameObject[] Tile;
     public GameObject Type;
+    public GameObject[] Types;
 
     public bool ButtonDown;
 
@@ -40,10 +42,21 @@ public class ButtonTile : MonoBehaviour {
     {
         if (ButtonDown == false)
         {
-            foreach (GameObject item in Tile)
+            if (MultTypes == true)
             {
-                item.tag = Type.tag;
-                item.GetComponent<SpriteRenderer>().color = Type.GetComponent<SpriteRenderer>().color;
+                for (int i = 0; i < Types.Length; i++)
+                {
+                    Tile[i].tag = Types[i].tag;
+                    Tile[i].GetComponent<SpriteRenderer>().color = Types[i].GetComponent<SpriteRenderer>().color;
+                }
+            }
+            else
+            {
+                foreach (GameObject item in Tile)
+                {
+                    item.tag = Type.tag;
+                    item.GetComponent<SpriteRenderer>().color = Type.GetComponent<SpriteRenderer>().color;
+                }
             }
             ButtonDown = true;
         }
