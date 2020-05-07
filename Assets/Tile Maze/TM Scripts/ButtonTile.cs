@@ -8,6 +8,8 @@ public class ButtonTile : MonoBehaviour {
     public bool MultTypes;
     Color[] ColorMem;
     string[] TagMem;
+    public GameObject EndTile;
+    Vector2 EndMem;
 
     public GameObject[] Tile;
     public GameObject Type;
@@ -30,6 +32,11 @@ public class ButtonTile : MonoBehaviour {
         {
             ColorMem[i] = Tile[i].GetComponent<SpriteRenderer>().color;
         }
+
+        if (EndTile != null)
+        {
+            EndMem = EndTile.transform.position;
+        }
     }
 	
 	// Update is called once per frame
@@ -42,20 +49,28 @@ public class ButtonTile : MonoBehaviour {
     {
         if (ButtonDown == false)
         {
-            if (MultTypes == true)
+            if (EndTile != null) //EndTile Script
             {
-                for (int i = 0; i < Types.Length; i++)
-                {
-                    Tile[i].tag = Types[i].tag;
-                    Tile[i].GetComponent<SpriteRenderer>().color = Types[i].GetComponent<SpriteRenderer>().color;
-                }
+                Tile[0].SetActive(false);
+                EndTile.transform.position = Tile[0].transform.position;
             }
             else
             {
-                foreach (GameObject item in Tile)
+                if (MultTypes == true)
                 {
-                    item.tag = Type.tag;
-                    item.GetComponent<SpriteRenderer>().color = Type.GetComponent<SpriteRenderer>().color;
+                    for (int i = 0; i < Types.Length; i++)
+                    {
+                        Tile[i].tag = Types[i].tag;
+                        Tile[i].GetComponent<SpriteRenderer>().color = Types[i].GetComponent<SpriteRenderer>().color;
+                    }
+                }
+                else
+                {
+                    foreach (GameObject item in Tile)
+                    {
+                        item.tag = Type.tag;
+                        item.GetComponent<SpriteRenderer>().color = Type.GetComponent<SpriteRenderer>().color;
+                    }
                 }
             }
             ButtonDown = true;
@@ -65,10 +80,18 @@ public class ButtonTile : MonoBehaviour {
         {
             if(Reversable == true)
             {
-                for (int i = 0; i < Tile.Length; i++)
+                if (EndTile != null) //EndTile Script
                 {
-                    Tile[i].tag = TagMem[i];
-                    Tile[i].GetComponent<SpriteRenderer>().color = ColorMem[i];
+                    Tile[0].SetActive(true);
+                    EndTile.gameObject.transform.position = EndMem;
+                }
+                else
+                {
+                    for (int i = 0; i < Tile.Length; i++)
+                    {
+                        Tile[i].tag = TagMem[i];
+                        Tile[i].GetComponent<SpriteRenderer>().color = ColorMem[i];
+                    }
                 }
                 ButtonDown = false;
             }
@@ -77,10 +100,18 @@ public class ButtonTile : MonoBehaviour {
 
     public void Reload()
     {
-        for (int i = 0; i < Tile.Length; i++)
+        if (EndTile != null) //EndTile Script
         {
-            Tile[i].tag = TagMem[i];
-            Tile[i].GetComponent<SpriteRenderer>().color = ColorMem[i];
+            Tile[0].SetActive(true);
+            EndTile.gameObject.transform.position = EndMem;
+        }
+        else
+        {
+            for (int i = 0; i < Tile.Length; i++)
+            {
+                Tile[i].tag = TagMem[i];
+                Tile[i].GetComponent<SpriteRenderer>().color = ColorMem[i];
+            }
         }
         ButtonDown = false;
     }
