@@ -20797,7 +20797,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Reversable: 0
   MultTypes: 0
-  EndTile: {fileID: 0}
   Tile:
   - {fileID: 1284468708}
   - {fileID: 544813740}
@@ -33717,7 +33716,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Reversable: 1
   MultTypes: 0
-  EndTile: {fileID: 0}
   Tile:
   - {fileID: 1326929771}
   Type: {fileID: 1703000446}
@@ -50634,12 +50632,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Reversable: 1
-  MultTypes: 0
-  EndTile: {fileID: 759878128}
+  MultTypes: 1
   Tile:
   - {fileID: 2087343425}
-  Type: {fileID: 1703000446}
-  Types: []
+  Type: {fileID: 759878128}
+  Types:
+  - {fileID: 759878128}
   ButtonDown: 0
 --- !u!61 &1594166317
 BoxCollider2D:
@@ -50742,7 +50740,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Reversable: 1
   MultTypes: 1
-  EndTile: {fileID: 0}
   Tile:
   - {fileID: 1862891338}
   - {fileID: 2137067532}
