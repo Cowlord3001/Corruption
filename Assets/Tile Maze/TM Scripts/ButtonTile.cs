@@ -54,6 +54,12 @@ public class ButtonTile : MonoBehaviour {
                         Types[i].transform.position = Tile[i].transform.position;
                         Types[i].SetActive(true);
                     }
+                    else if(Tile[i].tag == "End") //Set EndTile to Tile
+                    {
+                        Tile[i].SetActive(false);
+                        Types[i].transform.position = Tile[i].transform.position;
+                        Types[i].SetActive(true);
+                    }
                     else
                     {
                         Tile[i].tag = Types[i].tag;
@@ -64,6 +70,12 @@ public class ButtonTile : MonoBehaviour {
             else
             {
                 if (Type.tag == "End") //Set Tile to EndTile
+                {
+                    Tile[0].SetActive(false);
+                    Type.transform.position = Tile[0].transform.position;
+                    Type.SetActive(true);
+                }
+                else if (Tile[0].tag == "End") //Set EndTile to Tile
                 {
                     Tile[0].SetActive(false);
                     Type.transform.position = Tile[0].transform.position;
@@ -99,6 +111,18 @@ public class ButtonTile : MonoBehaviour {
                             Type.SetActive(false);
                         }
                     }
+                    else if ((MultTypes == true && Tile[i].tag == "End") || (MultTypes == false && Tile[0].tag == "End")) //Set EndTile to Tile
+                    {
+                        Tile[i].SetActive(true);
+                        if (MultTypes == true)
+                        {
+                            Types[i].SetActive(false);
+                        }
+                        else
+                        {
+                            Type.SetActive(false);
+                        }
+                    }
                     Tile[i].tag = TagMem[i];
                     Tile[i].GetComponent<SpriteRenderer>().color = ColorMem[i];
                 }
@@ -112,6 +136,18 @@ public class ButtonTile : MonoBehaviour {
         for (int i = 0; i < Tile.Length; i++)
         {
             if ((MultTypes == true && Types[i].tag == "End") || (MultTypes == false && Type.tag == "End")) //Set Tile to EndTile
+            {
+                Tile[i].SetActive(true);
+                if (MultTypes == true)
+                {
+                    Types[i].SetActive(false);
+                }
+                else
+                {
+                    Type.SetActive(false);
+                }
+            }
+            else if ((MultTypes == true && Tile[i].tag == "End") || (MultTypes == false && Tile[0].tag == "End")) //Set EndTile to Tile
             {
                 Tile[i].SetActive(true);
                 if (MultTypes == true)

@@ -29,6 +29,8 @@ public class TileMove : MonoBehaviour {
     float Timer;
     public bool Developer_Mode;
 
+    bool NoToggle;
+
     public AudioSource Move;
     public AudioSource Finish;
     public AudioSource Yellow;
@@ -114,6 +116,7 @@ public class TileMove : MonoBehaviour {
         Debug.Log("Tag = " + Hit.collider.tag);
         if (Hit.collider.tag == "Red" && Developer_Mode == false)
         {
+            NoToggle = true;
             StopMovement();
         }
         else
@@ -225,15 +228,30 @@ public class TileMove : MonoBehaviour {
                 }
             }
 
-            if(CurrentTile.tag == "Button")
+            if(CurrentTile.tag == "Button" && NoToggle == false)
             {
-                if(CurrentTile.GetComponent<ButtonTile>().ButtonDown == false || CurrentTile.GetComponent<ButtonTile>().Reversable == true)
+                if (CurrentTile.GetComponent<ButtonTile>() != null)
                 {
-                    Button.Play();
+                    if (CurrentTile.GetComponent<ButtonTile>().ButtonDown == false ||
+                    CurrentTile.GetComponent<ButtonTile>().Reversable == true)
+                    {
+                        Button.Play();
+                    }
+                }
+                else
+                {
+                    if (CurrentTile.GetComponent<Button_Control>().ButtonDown == false)
+                    {
+                        Button.Play();
+                    }
                 }
                 ButtonsPressed.Add(CurrentTile);
                 CurrentTile.SendMessage("Change");
-                //Multiple Scripts can Run -- Change Multiple Things
+            }
+
+            else
+            {
+                NoToggle = false;
             }
 
             transform.position = CurrentTile.transform.position;
