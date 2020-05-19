@@ -38,6 +38,9 @@ public class TileMove : MonoBehaviour {
     public AudioSource Static;
     public AudioSource LongStatic;
 
+    public int BrownX;
+    public int BrownY;
+
     // Use this for initialization
     void Start ()
     {
@@ -113,14 +116,56 @@ public class TileMove : MonoBehaviour {
     void StartMove()
     {
         RaycastHit2D Hit = Physics2D.Raycast(StartPos + (TargetPos - StartPos) * .5f, TargetPos - StartPos, 1);
-        Debug.Log("Tag = " + Hit.collider.tag);
+        //Debug.Log("Tag = " + Hit.collider.tag);
         if (Hit.collider.tag == "Red" && Developer_Mode == false)
         {
             NoToggle = true;
             StopMovement();
+            //NoBrown
+        }
+        else if (Hit.collider.tag == "Green" && (Weight == 1 || Weight == 0))
+        {
+            //NoBrown
+            Move.Play();
+        }
+        else if (Hit.collider.tag == "Blue")
+        {
+            bool NoYellow = true;
+            if (Hit.collider.tag == "Blue" && (Weight == -1 || Weight == 0))
+            {
+                NoYellow = false;
+            }
+            else
+            {
+                GameObject[] Neighbors = GetNeigh(Hit.collider.gameObject);
+                for (int i = 0; i < Neighbors.Length; i++)
+                {
+                    if (Neighbors[i].tag == "Yellow")
+                    {
+                        NoYellow = false;
+                    }
+                }
+            }
+
+            if (NoYellow == true)
+            {
+                AdvanceBrown(); //YesBrown
+                Move.Play();
+            }
+            else
+            {
+                //NoBrown
+                Move.Play();
+            }
+        }
+        else if (Hit.collider.tag == "Yellow" || Hit.collider.tag == "Static" || Hit.collider.tag == "End")
+        {
+            //Disable Brown Collision $
+            Move.Play();
         }
         else
         {
+            AdvanceBrown(); //YesBrown
             Move.Play();
         }
         
@@ -312,7 +357,16 @@ public class TileMove : MonoBehaviour {
 
         for (int i = 0; i < ButtonsPressed.Count; i++)
         {
-            ButtonsPressed[i].SendMessage("Reload");
+            if(ButtonsPressed[i].activeSelf == true)
+            {
+                ButtonsPressed[i].SendMessage("Reload");
+            }
+            else
+            {
+                ButtonsPressed[i].SetActive(true);
+                ButtonsPressed[i].SendMessage("Reload");
+                ButtonsPressed[i].SetActive(false);
+            }
         }
     }
 
@@ -503,6 +557,15 @@ public class TileMove : MonoBehaviour {
         else
         {
             Camera.main.transform.rotation *= Quaternion.Euler(0, 0, (maxrotation) / Mathf.Pow(TimerTrigger._MaxTime * 2f / 3f, 2f));
+        }
+    }
+
+    public void AdvanceBrown()
+    {
+        GameObject[] Brown = GameObject.FindGameObjectsWithTag("Moving");
+        for (int i = 0; i < Brown.Length; i++)
+        {
+            Brown[i].SendMessage("Step");
         }
     }
 }
