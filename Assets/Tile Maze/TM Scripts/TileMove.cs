@@ -116,7 +116,7 @@ public class TileMove : MonoBehaviour {
     void StartMove()
     {
         RaycastHit2D Hit = Physics2D.Raycast(StartPos + (TargetPos - StartPos) * .5f, TargetPos - StartPos, 1);
-        //Debug.Log("Tag = " + Hit.collider.tag);
+        Debug.Log("Tag = " + Hit.collider.tag);
         if (Hit.collider.tag == "Red" && Developer_Mode == false)
         {
             NoToggle = true;
@@ -230,7 +230,15 @@ public class TileMove : MonoBehaviour {
                 CanMove = true;
             }
         }
-        
+
+        //else if (CurrentTile.tag == "Moving")
+        //{
+        //    Yellow.Play();
+        //    CanMove = false;
+        //    CurrentTile.SendMessage("Freeze");
+        //    MovingTile.WaitReload = true;
+        //    Invoke("reload", 1);
+        //}
 
         else
         {
@@ -313,6 +321,11 @@ public class TileMove : MonoBehaviour {
             PrevTile = CurrentTile;
         }
         CurrentTile = collision.gameObject;
+
+        if (collision.tag == "Moving")
+        {
+            reload();
+        }
     }
 
     GameObject[] GetNeigh(GameObject TargetTile)
@@ -368,6 +381,12 @@ public class TileMove : MonoBehaviour {
                 ButtonsPressed[i].SetActive(false);
             }
         }
+
+        GameObject[] Brown = GameObject.FindGameObjectsWithTag("Moving");
+        for (int i = 0; i < Brown.Length; i++)
+        {
+            Brown[i].SendMessage("Reload");
+        }
     }
 
     public void MazeReload()
@@ -410,7 +429,22 @@ public class TileMove : MonoBehaviour {
 
         for (int i = 0; i < ButtonsPressed.Count; i++)
         {
-            ButtonsPressed[i].SendMessage("Reload");
+            if (ButtonsPressed[i].activeSelf == true)
+            {
+                ButtonsPressed[i].SendMessage("Reload");
+            }
+            else
+            {
+                ButtonsPressed[i].SetActive(true);
+                ButtonsPressed[i].SendMessage("Reload");
+                ButtonsPressed[i].SetActive(false);
+            }
+        }
+
+        GameObject[] Brown = GameObject.FindGameObjectsWithTag("Moving");
+        for (int i = 0; i < Brown.Length; i++)
+        {
+            Brown[i].SendMessage("Reload");
         }
     }
 

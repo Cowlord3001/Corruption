@@ -16,6 +16,7 @@ public class MovingTile : MonoBehaviour {
     Vector2 TargetPos;
 
     public bool OldMove;
+    //public static bool WaitReload;
 
 	// Use this for initialization
 	void Start ()
@@ -92,16 +93,38 @@ public class MovingTile : MonoBehaviour {
 
     void Step()
     {
-        if(OldMove != true)
+        if(OldMove != true /*&& WaitReload == false*/)
         {
-            if ((StartPos - (Vector2) Waypoints[CurrentWaypoint].transform.position).magnitude <= .5)
+            StartPos = transform.position;
+            if ((StartPos - (Vector2) Waypoints[CurrentWaypoint].transform.position).magnitude <= .2)
             {
                 CurrentWaypoint++;
                 CurrentWaypoint = CurrentWaypoint % Waypoints.Length;
             }
-            StartPos = transform.position;
             TargetPos = StartPos + ((Vector2)Waypoints[CurrentWaypoint].transform.position - StartPos).normalized;
+            Debug.Log("Step Towards " + TargetPos);
             Moving = true;
         }
+    }
+
+    void Reload()
+    {
+        if(OldMove != true)
+        {
+            transform.position = Waypoints[Waypoints.Length - 1].transform.position;
+            CurrentWaypoint = 0;
+            StartPos = Vector2.zero;
+            TargetPos = Vector2.zero;
+            Moving = false;
+            T = 0;
+            Debug.Log(transform.position);
+
+            //WaitReload = false;
+        }
+    }
+
+    void Freeze()
+    {
+        Moving = false;
     }
 }
