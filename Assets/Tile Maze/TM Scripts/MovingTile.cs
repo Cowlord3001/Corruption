@@ -16,6 +16,11 @@ public class MovingTile : MonoBehaviour {
     Vector2 TargetPos;
 
     public bool OldMove;
+
+    public bool IsSeeking;
+    GameObject Player;
+
+    GameObject CurrentTile;
     //public static bool WaitReload;
 
 	// Use this for initialization
@@ -39,7 +44,10 @@ public class MovingTile : MonoBehaviour {
         }
         else
         {
-
+            if(IsSeeking == true)
+            {
+                Player = GameObject.Find("Player");
+            }
         }
     }
 	
@@ -95,15 +103,124 @@ public class MovingTile : MonoBehaviour {
     {
         if(OldMove != true /*&& WaitReload == false*/)
         {
-            StartPos = transform.position;
-            if ((StartPos - (Vector2) Waypoints[CurrentWaypoint].transform.position).magnitude <= .2)
+            if (IsSeeking != true)
             {
-                CurrentWaypoint++;
-                CurrentWaypoint = CurrentWaypoint % Waypoints.Length;
+                StartPos = transform.position;
+                if ((StartPos - (Vector2)Waypoints[CurrentWaypoint].transform.position).magnitude <= .2)
+                {
+                    CurrentWaypoint++;
+                    CurrentWaypoint = CurrentWaypoint % Waypoints.Length;
+                }
+                TargetPos = StartPos + ((Vector2)Waypoints[CurrentWaypoint].transform.position - StartPos).normalized;
+                //Debug.Log("Step Towards " + TargetPos);
+                Moving = true;
+
+                if(CurrentTile != null)
+                {
+                    CurrentTile.transform.position += Vector3.back;
+                }
+                RaycastHit2D Hit = Physics2D.Raycast(StartPos + (TargetPos - StartPos) * .5f, TargetPos - StartPos, 1);
+                CurrentTile = Hit.collider.gameObject;
+                CurrentTile.transform.position += Vector3.forward;
             }
-            TargetPos = StartPos + ((Vector2)Waypoints[CurrentWaypoint].transform.position - StartPos).normalized;
-            Debug.Log("Step Towards " + TargetPos);
-            Moving = true;
+            else
+            {
+                StartPos = transform.position;
+                int PlayX = Mathf.RoundToInt(Player.transform.position.x - transform.position.x);
+                int PlayY = Mathf.RoundToInt(Player.transform.position.y - transform.position.y);
+
+                TargetPos = (new Vector2(PlayX, 0)).normalized;
+                RaycastHit2D HitX = Physics2D.Raycast(StartPos + (TargetPos) * .5f, TargetPos, 1);
+
+                TargetPos = (new Vector2(0, PlayY)).normalized;
+                RaycastHit2D HitY = Physics2D.Raycast(StartPos + (TargetPos) * .5f, TargetPos, 1);
+
+                int rand = Random.Range(0, 2);
+
+                if ((rand == 0 && PlayX != 0) || (rand == 1 && PlayX != 0 && PlayY == 0))
+                {
+                    if (HitX.collider.tag == "Red" || HitX.collider.tag == "Blue")
+                    {
+                        if (HitY.collider.tag == "Red" || HitY.collider.tag == "Blue")
+                        {
+                            //Stuck
+                        }
+                        else
+                        {
+                            if (HitY.collider.transform.position.z < 1f)
+                            {
+                                TargetPos = StartPos + (new Vector2(0, PlayY)).normalized;
+                                Moving = true;
+                            }
+                            else
+                            {
+                                //Can't Move
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (HitX.collider.transform.position.z < 1f)
+                        {
+                            TargetPos = StartPos + (new Vector2(PlayX, 0)).normalized;
+                            Moving = true;
+                        }
+                        else
+                        {
+                            //Can't Move
+                        }
+                    }
+                }
+                else if (PlayY != 0)
+                {
+                    if (HitY.collider.tag == "Red" || HitY.collider.tag == "Blue")
+                    {
+                        if (HitX.collider.tag == "Red" || HitX.collider.tag == "Blue")
+                        {
+                            //Stuck
+                        }
+                        else
+                        {
+                            if (HitX.collider.transform.position.z < 1f)
+                            {
+                                TargetPos = StartPos + (new Vector2(PlayX, 0)).normalized;
+                                Moving = true;
+                            }
+                            else
+                            {
+                                //Can't Move
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (HitY.collider.transform.position.z < 1f)
+                        {
+                            TargetPos = StartPos + (new Vector2(0, PlayY)).normalized;
+                            Moving = true;
+                        }
+                        else
+                        {
+                            //Can't Move
+                        }
+                    }
+                }
+                else
+                {
+                    //Hit Player / Stuck
+                }
+
+                if (Moving == true)
+                {
+                    if (CurrentTile != null)
+                    {
+                        CurrentTile.transform.position += Vector3.back;
+                    }
+                    RaycastHit2D Hit = Physics2D.Raycast(StartPos + (TargetPos - StartPos) * .5f, TargetPos - StartPos, 1);
+                    CurrentTile = Hit.collider.gameObject;
+                    CurrentTile.transform.position += Vector3.forward;
+                }
+            }
         }
     }
 
@@ -111,20 +228,33 @@ public class MovingTile : MonoBehaviour {
     {
         if(OldMove != true)
         {
-            transform.position = Waypoints[Waypoints.Length - 1].transform.position;
-            CurrentWaypoint = 0;
-            StartPos = Vector2.zero;
-            TargetPos = Vector2.zero;
-            Moving = false;
-            T = 0;
-            Debug.Log(transform.position);
+            if (IsSeeking != true)
+            {
+                transform.position = Waypoints[Waypoints.Length - 1].transform.position;
+                CurrentWaypoint = 0;
+                StartPos = Vector2.zero;
+                TargetPos = Vector2.zero;
+                Moving = false;
+                T = 0;
+                //Debug.Log(transform.position);
 
-            //WaitReload = false;
+                CurrentTile.transform.position += Vector3.back;
+                CurrentTile = null;
+                //WaitReload = false;
+            }
+            else
+            {
+                transform.position = Waypoints[0].transform.position;
+                StartPos = Vector2.zero;
+                TargetPos = Vector2.zero;
+                Moving = false;
+                T = 0;
+            }
         }
     }
 
-    void Freeze()
-    {
-        Moving = false;
-    }
+    //void Freeze()
+    //{
+    //    Moving = false;
+    //}
 }

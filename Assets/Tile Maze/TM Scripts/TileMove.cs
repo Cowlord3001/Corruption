@@ -116,7 +116,7 @@ public class TileMove : MonoBehaviour {
     void StartMove()
     {
         RaycastHit2D Hit = Physics2D.Raycast(StartPos + (TargetPos - StartPos) * .5f, TargetPos - StartPos, 1);
-        Debug.Log("Tag = " + Hit.collider.tag);
+        //Debug.Log("Tag = " + Hit.collider.tag);
         if (Hit.collider.tag == "Red" && Developer_Mode == false)
         {
             NoToggle = true;
@@ -324,7 +324,7 @@ public class TileMove : MonoBehaviour {
 
         if (collision.tag == "Moving")
         {
-            reload();
+            Invoke("reload", .0167f);
         }
     }
 
@@ -351,6 +351,8 @@ public class TileMove : MonoBehaviour {
     void reload()
     {
         transform.position = OldStart.transform.position;
+        CurrentTile = OldStart;
+        StopMovement();
         Moving = false;
         CanMove = true;
         Weight = 0;
@@ -400,6 +402,8 @@ public class TileMove : MonoBehaviour {
         }
 
         transform.position = OldStart.transform.position;
+        CurrentTile = OldStart;
+        StopMovement();
         Moving = false;
         CanMove = true;
         Weight = 0;
@@ -599,7 +603,17 @@ public class TileMove : MonoBehaviour {
         GameObject[] Brown = GameObject.FindGameObjectsWithTag("Moving");
         for (int i = 0; i < Brown.Length; i++)
         {
-            Brown[i].SendMessage("Step");
+            if(Brown[i].GetComponent<MovingTile>().IsSeeking != true)
+            {
+                Brown[i].SendMessage("Step");
+            }
+        }
+        for (int i = 0; i < Brown.Length; i++)
+        {
+            if (Brown[i].GetComponent<MovingTile>().IsSeeking == true)
+            {
+                Brown[i].SendMessage("Step");
+            }
         }
     }
 }
